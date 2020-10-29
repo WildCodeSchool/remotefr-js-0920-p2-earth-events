@@ -1,15 +1,8 @@
 import axios from 'axios';
-// Donner un input sous la forme d'un objet.
-// La clé "params" doit avoir une valeur sous la forme d'un objet.
+// Donner un input sous la forme d'un objet {params:{clé: "valeur"}}.
 // Pour events, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 
 function eventsFinder(input) {
-  const defaultOptions = {
-    method: 'GET',
-    url: 'https://eonet.sci.gsfc.nasa.gov/api/v3/events',
-    params: { status: 'open' },
-    headers: { 'Content-Type': 'application/json' },
-  };
   const options = {
     method: 'GET',
     url: 'https://eonet.sci.gsfc.nasa.gov/api/v3/events',
@@ -18,11 +11,10 @@ function eventsFinder(input) {
   };
   const eventsList = [];
 
-  if (input.params && input.params !== {}) {
-    options.params = input.params;
-  } else {
-    options.params = defaultOptions.params;
+  if (input && input !== {}) {
+    options.params = input;
   }
+
   function getEvents(obj) {
     axios
       .request(obj)
