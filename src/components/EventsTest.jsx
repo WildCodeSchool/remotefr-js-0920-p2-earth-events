@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import eventsFinder from './EventsFinder';
 
-class EventsTest extends Component {
-  render() {
-    return (
-      <div>
-        <button type="button" onClick={this.getEvents}>
-          Get events
-        </button>
-        <p>{eventsFinder({ params: { status: 'open' } })}</p>
-        {/* <p>{eventsList[0].title}</p>
+function EventsTest() {
+  return (
+    <div>
+      <h1>Events you picked</h1>
+      <p>{eventsFinder({ params: { status: 'open' } })}</p>
+      {/* <p>{eventsList[0].title}</p>
                 <p>{eventsList[0].geometry[0].coordinates}</p> */}
-      </div>
-    );
-  }
+    </div>
+  );
 }
 export default EventsTest;

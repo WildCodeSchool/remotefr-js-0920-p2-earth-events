@@ -27,7 +27,7 @@ function eventsFinder(input) {
       .request(obj)
       .then((response) => response.data.events)
       .then((events) => {
-        for (let i = 0; i < events.length; i + 1) {
+        for (let i = 0; i < events.length; i += 1) {
           eventsList.push(events[i]);
         }
       });
