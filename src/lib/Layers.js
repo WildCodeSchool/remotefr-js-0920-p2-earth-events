@@ -7,20 +7,8 @@ function layersFinder(input) {
     url: `https://eonet.sci.gsfc.nasa.gov/api/v3/layers/${input}`,
     headers: { 'Content-Type': 'application/json' },
   };
-  const eventsList = [];
 
-  function getEvents(obj) {
-    axios
-      .request(obj)
-      .then((response) => response.data.events)
-      .then((events) => {
-        for (let i = 0; i < events.length; i += 1) {
-          eventsList.push(events[i]);
-        }
-      });
-  }
-  getEvents(options);
-  return eventsList;
+  return axios.request(options).then((response) => response.data.categories);
 }
 
 export default layersFinder;
