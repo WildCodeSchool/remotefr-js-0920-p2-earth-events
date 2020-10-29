@@ -1,25 +1,25 @@
 import axios from 'axios';
-// Donner un input sous la forme d'un tableau ["categorie", {objet}].
+// Donner un input sous la forme d'un objet.
 // La clé "params" doit avoir une valeur sous la forme d'un objet.
-// Pour categories, les paramètres sont : source, status, limit, days.
+// Pour GeoJson, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 
-function categoriesFinder(input) {
+function geoFinder(input) {
   const defaultOptions = {
     method: 'GET',
-    url: 'https://eonet.sci.gsfc.nasa.gov/api/v3/categories',
+    url: 'https://eonet.sci.gsfc.nasa.gov/api/v3/geojson',
     params: { status: 'open' },
     headers: { 'Content-Type': 'application/json' },
   };
   const options = {
     method: 'GET',
-    url: `https://eonet.sci.gsfc.nasa.gov/api/v3/categories/${input[0]}`,
+    url: 'https://eonet.sci.gsfc.nasa.gov/api/v3/geojson',
     params: {},
     headers: { 'Content-Type': 'application/json' },
   };
   const eventsList = [];
 
-  if (input[1].params && input[1].params !== {}) {
-    options.params = input[1].params;
+  if (input.params && input.params !== {}) {
+    options.params = input.params;
   } else {
     options.params = defaultOptions.params;
   }
@@ -37,4 +37,4 @@ function categoriesFinder(input) {
   return eventsList;
 }
 
-export default categoriesFinder;
+export default geoFinder;
