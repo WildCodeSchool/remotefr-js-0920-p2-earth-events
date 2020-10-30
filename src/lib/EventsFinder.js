@@ -15,21 +15,21 @@ function eventsFinder(input) {
 
   if (input.field === 'events') {
     options.url = '/events';
-    if (input.params && input.params !== {}) {
+    if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
     return instance.request(options).then((response) => response.data.events);
   }
   if (input.field === 'geoJson') {
     options.url = '/events/geojson';
-    if (input.params && input.params !== {}) {
+    if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
     return instance.request(options).then((response) => response.data.features);
   }
   if (input.field === 'categories') {
     options.url = `/categories/${input.categorie}`;
-    if (input.params && input.params !== {}) {
+    if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
     return instance.request(options).then((response) => response.data.events);
