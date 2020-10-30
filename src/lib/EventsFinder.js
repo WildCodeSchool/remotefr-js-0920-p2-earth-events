@@ -5,35 +5,40 @@ import axios from 'axios';
 // Pour categories, les paramètres sont : source, status, limit, days.
 
 function eventsFinder(input) {
+  const instance = axios.create({
+    baseURL: 'https://eonet.sci.gsfc.nasa.gov/api/v3',
+  });
   const options = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
 
   if (input.field === 'events') {
-    options.url = 'https://eonet.sci.gsfc.nasa.gov/api/v3/events';
+    options.url = '/events';
     if (input.params && input.params !== {}) {
       options.params = input.params;
     }
-    return axios.request(options).then((response) => response.data.events);
+    return instance.request(options).then((response) => response.data.events);
   }
   if (input.field === 'geoJson') {
-    options.url = 'https://eonet.sci.gsfc.nasa.gov/api/v3/events/geojson';
+    options.url = '/events/geojson';
     if (input.params && input.params !== {}) {
       options.params = input.params;
     }
-    return axios.request(options).then((response) => response.data.features);
+    return instance.request(options).then((response) => response.data.features);
   }
   if (input.field === 'categories') {
-    options.url = `https://eonet.sci.gsfc.nasa.gov/api/v3/categories/${input.categorie}`;
+    options.url = `/categories/${input.categorie}`;
     if (input.params && input.params !== {}) {
       options.params = input.params;
     }
-    return axios.request(options).then((response) => response.data.events);
+    return instance.request(options).then((response) => response.data.events);
   }
   if (input.field === 'layers') {
-    options.url = `https://eonet.sci.gsfc.nasa.gov/api/v3/layers/${input.categorie}`;
-    return axios.request(options).then((response) => response.data.categories);
+    options.url = `/layers/${input.categorie}`;
+    return instance
+      .request(options)
+      .then((response) => response.data.categories);
   }
   return 'Something went wrong.';
 }
