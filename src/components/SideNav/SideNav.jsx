@@ -40,40 +40,46 @@ const anotherFake = () => {
 export default class SideNav extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { collapsed: true };
-    this.collapsedYellowPanel = this.collapsedYellowPanel.bind(this);
-    this.closeYellowPanel = this.closeYellowPanel.bind(this);
+    if (window.location.pathname === '/') {
+      this.state = { isClose: true };
+    } else {
+      this.state = { isClose: false };
+    }
   }
 
-  // Toggle Panel
-  collapsedYellowPanel = () => {
-    const { collapsed } = this.state;
-    if (!collapsed) {
-      this.setState({
-        collapsed: true,
-      });
+  collapsedYellowPanel = (event) => {
+    const { isClose } = this.state;
+    if (event.target.pathname === window.location.pathname) {
+      this.setState(() => ({
+        isClose: true,
+      }));
+      return;
+    }
+    if (!isClose) {
+      this.setState(() => ({
+        isClose: true,
+      }));
 
       setTimeout(() => {
-        this.setState({
-          collapsed: false,
-        });
+        this.setState(() => ({
+          isClose: false,
+        }));
       }, 390);
     } else {
-      this.setState({
-        collapsed: false,
-      });
+      this.setState(() => ({
+        isClose: false,
+      }));
     }
   };
 
-  // Close Yellow Panel
   closeYellowPanel = () => {
-    this.setState({
-      collapsed: false,
-    });
+    this.setState(() => ({
+      isClose: true,
+    }));
   };
 
   render = () => {
-    const { collapsed } = this.state;
+    const { isClose } = this.state;
     return (
       <div>
         <div className="sidenav">
@@ -99,8 +105,11 @@ export default class SideNav extends React.Component {
             ))}
           </div>
         </div>
-        <div id="yellow-panel" className={collapsed ? 'collapsed' : ''}>
+        <div id="yellow-panel" className={!isClose ? '' : 'isOpen'}>
           <div className="yellow-panel-container">
+            <NavLink to="/" onClick={this.closeYellowPanel}>
+              Fermeture
+            </NavLink>
             <Switch>
               <Route exact path="/" component={WelcomeDude} />
               <Route exact path="/opt1" component={fakePage} />

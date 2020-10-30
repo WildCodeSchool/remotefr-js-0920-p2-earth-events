@@ -18,7 +18,7 @@
   box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
 }
 
-#yellow-panel.collapsed {
+#yellow-panel.isOpen {
   left: -120px;
 }
 
