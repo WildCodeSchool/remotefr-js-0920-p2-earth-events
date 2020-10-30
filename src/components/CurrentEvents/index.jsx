@@ -1,4 +1,6 @@
 import React from 'react';
+import EventPreview from '../EventPreview';
+import './style.css';
 
 const CurrentEvents = class CurrentEvents extends React.Component {
   constructor() {
@@ -21,14 +23,24 @@ const CurrentEvents = class CurrentEvents extends React.Component {
   render() {
     const { latest, loading } = this.state;
     return (
-      <section>
+      <section id="CurrentEvents">
         <h2>Événements naturels en cours</h2>
-        {loading ? <p>Récupération des données en cours…</p> : ''}
-        {!loading && !latest.length ? <p>Aucun événement</p> : ''}
+        {loading ? (
+          <p className="loading">Récupération des données en cours…</p>
+        ) : (
+          ''
+        )}
+        {!loading && !latest.length ? (
+          <p clasName="empty">Aucun événement</p>
+        ) : (
+          ''
+        )}
         {!loading && latest.length ? (
           <ol>
             {latest.map((event) => (
-              <li>{event.title}</li>
+              <li>
+                <EventPreview event={event} />
+              </li>
             ))}
           </ol>
         ) : (

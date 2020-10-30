@@ -1,0 +1,29 @@
+.EventPreview {
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid hsl(0, 0%, 50%);
+}
+.EventPreview .location span {
+  margin: 0 0.1em;
+}
+.EventPreview .state + .county:after {
+  content: ',';
+}
+.EventPreview .country:before {
+  content: '(';
+}
+.EventPreview .country:after {
+  content: ')';
+}
+.EventPreview .categories {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.EventPreview .categories li {
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  background-color: hsl(0, 0%, 50%);
+  color: hsl(0, 0%, 100%);
+}
