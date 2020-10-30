@@ -40,7 +40,7 @@ function eventsFinder(input) {
       .request(options)
       .then((response) => response.data.categories);
   }
-  return 'Something went wrong.';
+  return Promise.resolve('Something went wrong (bad parameters)');
 }
 
 export default eventsFinder;
