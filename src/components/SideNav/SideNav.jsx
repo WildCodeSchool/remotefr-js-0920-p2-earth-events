@@ -28,10 +28,10 @@ const menuList = [
   },
 ];
 
-const fakePage = () => {
+const FakePage = () => {
   return <h3>Fake Page</h3>;
 };
-const anotherFake = () => {
+const AnotherFake = () => {
   return <h3>Another Fake Page</h3>;
 };
 
@@ -121,10 +121,10 @@ class SideNav extends React.Component {
           <div className="yellow-panel-container">
             <Switch>
               <Route exact path="/" />
-              <Route exact path="/opt1" component={fakePage} />
-              <Route exact path="/opt2" component={anotherFake} />
-              <Route exact path="/opt3" component={fakePage} />
-              <Route exact path="/opt4" component={anotherFake} />
+              <Route exact path="/opt1" component={FakePage} />
+              <Route exact path="/opt2" component={AnotherFake} />
+              <Route exact path="/opt3" component={FakePage} />
+              <Route exact path="/opt4" component={AnotherFake} />
             </Switch>
           </div>
         </div>
