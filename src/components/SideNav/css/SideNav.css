@@ -1,0 +1,71 @@
+/***********************************************************
+ - sidebar
+***********************************************************/
+
+.logo {
+    max-width: 80%;
+    margin-bottom: 30px;
+}
+
+
+.sidenav {
+  height: 100%;
+  width: 320px;
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  background-color: #0c0c0c;
+  overflow-x: hidden;
+  padding-top: 20px;
+  -webkit-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+  box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+}
+
+.titleParameters {
+  color: #FFF;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.titleParameters::before {
+  content: "> ";
+  color: #fed32c;
+}
+
+
+.menu-button>a {
+  background-color: #2b2b2b;
+  color: #FFF;
+  padding: 20px;
+  margin: 4px 0px;
+  display: flex;
+  text-decoration: none;
+}
+.menu-button>a:hover {
+  background-color: #ffd32d;
+  color: #000;
+}
+
+.menu-button>a.selected {
+  background-color: #ffd32d;
+  color: #000;
+}
+
+.menu-button>a.selected>div:first-child {
+  color: #000;
+}
+
+.menu-button>a>div:first-child {
+  color: white;
+}
+
+.menu-button>a>div:last-child {
+  margin-left: auto;
+}
+
+.menu-button>a>div:last-child>img {
+  width: 11px;
+}
