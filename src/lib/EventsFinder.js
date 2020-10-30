@@ -24,7 +24,7 @@ function eventsFinder(input) {
   }
   if (input.field === 'geoJson') {
     if (input.id) {
-      options.url = `/events/geojson/${input.id}`;
+      options.url = `/events/${input.id}/geojson`;
     } else {
       options.url = '/events/geojson';
     }
