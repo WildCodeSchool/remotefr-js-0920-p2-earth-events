@@ -4,7 +4,7 @@ import axios from 'axios';
 // Pour geoJson, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 // Pour categories, les paramètres sont : source, status, limit, days.
 
-function eventsFinder(input) {
+function eonet(input) {
   const instance = axios.create({
     baseURL: 'https://eonet.sci.gsfc.nasa.gov/api/v3',
     headers: { 'Content-Type': 'application/json' },
@@ -47,4 +47,4 @@ function eventsFinder(input) {
   return Promise.reject(new Error('Something went wrong (bad parameters)'));
 }
 
-export default eventsFinder;
+export default eonet;
