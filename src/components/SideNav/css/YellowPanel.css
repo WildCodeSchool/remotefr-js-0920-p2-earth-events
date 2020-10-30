@@ -38,9 +38,18 @@
 }
 
 
+.yellow-panel-options{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin:10px 10px;
+}
+
 
 
 .close-button {
+  color:#333333;
+  text-decoration: none;
   font-size: 20px;
 }
 

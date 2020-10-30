@@ -1,7 +1,8 @@
 import React from 'react';
 import './css/SideNav.css';
 import './css/YellowPanel.css';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types'; // ES6
+import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 
 // ***************************************************
 // FAKE Page and Data
@@ -27,9 +28,6 @@ const menuList = [
   },
 ];
 
-const WelcomeDude = () => {
-  return <h3>Welcome</h3>;
-};
 const fakePage = () => {
   return <h3>Fake Page</h3>;
 };
@@ -37,24 +35,28 @@ const anotherFake = () => {
   return <h3>Another Fake Page</h3>;
 };
 
-export default class SideNav extends React.Component {
+class SideNav extends React.Component {
   constructor(props) {
     super(props);
-    if (window.location.pathname === '/') {
-      this.state = { isClose: true };
-    } else {
-      this.state = { isClose: false };
-    }
+    this.state = {
+      isClose: window.location.pathname === '/',
+    };
   }
 
   collapsedYellowPanel = (event) => {
     const { isClose } = this.state;
+    const { history } = this.props;
+    // Si les chemin son identique alors on referme le panel et on redirect vers "/"
     if (event.target.pathname === window.location.pathname) {
+      event.preventDefault();
       this.setState(() => ({
         isClose: true,
       }));
+      history.push('/');
       return;
     }
+
+    // Si le panel n'est pas fermer, alros on le ferme puis on le re-ouvre
     if (!isClose) {
       this.setState(() => ({
         isClose: true,
@@ -72,6 +74,7 @@ export default class SideNav extends React.Component {
     }
   };
 
+  // On ferme le Panel
   closeYellowPanel = () => {
     this.setState(() => ({
       isClose: true,
@@ -106,12 +109,18 @@ export default class SideNav extends React.Component {
           </div>
         </div>
         <div id="yellow-panel" className={!isClose ? '' : 'isOpen'}>
-          <div className="yellow-panel-container">
-            <NavLink to="/" onClick={this.closeYellowPanel}>
-              Fermeture
+          <div className="yellow-panel-options">
+            <NavLink
+              to="/"
+              onClick={this.closeYellowPanel}
+              className="close-button"
+            >
+              Close Panel
             </NavLink>
+          </div>
+          <div className="yellow-panel-container">
             <Switch>
-              <Route exact path="/" component={WelcomeDude} />
+              <Route exact path="/" />
               <Route exact path="/opt1" component={fakePage} />
               <Route exact path="/opt2" component={anotherFake} />
               <Route exact path="/opt3" component={fakePage} />
@@ -123,3 +132,11 @@ export default class SideNav extends React.Component {
     );
   };
 }
+
+SideNav.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(SideNav);
