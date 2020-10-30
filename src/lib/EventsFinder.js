@@ -1,5 +1,5 @@
 import axios from 'axios';
-// Donner un input sous la forme d'un objet {field: "events", params:{clé: "valeur"}, categorie:"categorie"}.
+// Donner un input sous la forme d'un objet {field: "events", params:{clé: "valeur"}, categorie:"categorie", id:"EONET_0000"}. Seul le premier est requis.
 // Pour events, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 // Pour geoJson, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 // Pour categories, les paramètres sont : source, status, limit, days.
@@ -12,14 +12,22 @@ function eventsFinder(input) {
   const options = {};
 
   if (input.field === 'events') {
-    options.url = '/events';
+    if (input.id) {
+      options.url = `/events/${input.id}`;
+    } else {
+      options.url = '/events';
+    }
     if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
     return instance.get(options).then((response) => response.data.events);
   }
   if (input.field === 'geoJson') {
-    options.url = '/events/geojson';
+    if (input.id) {
+      options.url = `/events/geojson/${input.id}`;
+    } else {
+      options.url = '/events/geojson';
+    }
     if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
