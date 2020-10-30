@@ -44,7 +44,7 @@ function eventsFinder(input) {
     options.url = `/layers/${input.categorie}`;
     return instance.get(options).then((response) => response.data.categories);
   }
-  return Promise.resolve('Something went wrong (bad parameters)');
+  return Promise.reject(new Error('Something went wrong (bad parameters)'));
 }
 
 export default eventsFinder;
