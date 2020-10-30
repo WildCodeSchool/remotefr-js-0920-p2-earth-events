@@ -7,38 +7,34 @@ import axios from 'axios';
 function eventsFinder(input) {
   const instance = axios.create({
     baseURL: 'https://eonet.sci.gsfc.nasa.gov/api/v3',
-  });
-  const options = {
-    method: 'GET',
     headers: { 'Content-Type': 'application/json' },
-  };
+  });
+  const options = {};
 
   if (input.field === 'events') {
     options.url = '/events';
     if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
-    return instance.request(options).then((response) => response.data.events);
+    return instance.get(options).then((response) => response.data.events);
   }
   if (input.field === 'geoJson') {
     options.url = '/events/geojson';
     if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
-    return instance.request(options).then((response) => response.data.features);
+    return instance.get(options).then((response) => response.data.features);
   }
   if (input.field === 'categories') {
     options.url = `/categories/${input.categorie}`;
     if (input.params && Object.keys(input.params).length > 0) {
       options.params = input.params;
     }
-    return instance.request(options).then((response) => response.data.events);
+    return instance.get(options).then((response) => response.data.events);
   }
   if (input.field === 'layers') {
     options.url = `/layers/${input.categorie}`;
-    return instance
-      .request(options)
-      .then((response) => response.data.categories);
+    return instance.get(options).then((response) => response.data.categories);
   }
   return Promise.resolve('Something went wrong (bad parameters)');
 }
