@@ -10,15 +10,15 @@ function eonet(input) {
     headers: { 'Content-Type': 'application/json' },
   });
   const options = {};
+  if (input.params && Object.keys(input.params).length > 0) {
+    options.params = input.params;
+  }
 
   if (input.field === 'events') {
     if (input.id) {
       options.url = `/events/${input.id}`;
     } else {
       options.url = '/events';
-    }
-    if (input.params && Object.keys(input.params).length > 0) {
-      options.params = input.params;
     }
     return instance.get(options).then((response) => response.data.events);
   }
@@ -28,16 +28,10 @@ function eonet(input) {
     } else {
       options.url = '/events/geojson';
     }
-    if (input.params && Object.keys(input.params).length > 0) {
-      options.params = input.params;
-    }
     return instance.get(options).then((response) => response.data.features);
   }
   if (input.field === 'categories') {
     options.url = `/categories/${input.categorie}`;
-    if (input.params && Object.keys(input.params).length > 0) {
-      options.params = input.params;
-    }
     return instance.get(options).then((response) => response.data.events);
   }
   if (input.field === 'layers') {
