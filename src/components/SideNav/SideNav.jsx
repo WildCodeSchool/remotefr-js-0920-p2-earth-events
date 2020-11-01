@@ -3,6 +3,7 @@ import './css/SideNav.css';
 import './css/YellowPanel.css';
 import PropTypes from 'prop-types'; // ES6
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
+import CurrentEvents from '../CurrentEvents';
 
 // ***************************************************
 // FAKE Page and Data
@@ -11,8 +12,8 @@ import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 const menuList = [
   // Fake menu
   {
-    name: 'Option N° 1',
-    route: '/opt1',
+    name: 'En cours',
+    route: '/current',
   },
   {
     name: 'Option N° 2',
@@ -121,7 +122,7 @@ class SideNav extends React.Component {
           <div className="yellow-panel-container">
             <Switch>
               <Route exact path="/" />
-              <Route exact path="/opt1" component={FakePage} />
+              <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/opt2" component={AnotherFake} />
               <Route exact path="/opt3" component={FakePage} />
               <Route exact path="/opt4" component={AnotherFake} />
