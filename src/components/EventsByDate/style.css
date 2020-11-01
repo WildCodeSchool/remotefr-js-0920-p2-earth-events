@@ -1,0 +1,15 @@
+#EventsByDate ol {
+  list-style: none;
+  padding: 0;
+}
+#EventsByDate .dateSelect {
+  text-align: center;
+}
+#EventsByDate .dateSelect input {
+  font-size: 1.6em;
+  padding: 0.25em;
+  border-color: hsl(0, 0%, 20%);
+}
+.error {
+  color: darkred;
+}
