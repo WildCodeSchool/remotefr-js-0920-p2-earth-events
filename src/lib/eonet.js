@@ -1,5 +1,5 @@
 import axios from 'axios';
-// Donner un input sous la forme d'un objet {field: "events", params:{clé: "valeur"}, categorie:"categorie", id:"EONET_0000"}. Seul le premier est requis.
+// Donner un input sous la forme d'un objet {field: "events", params:{clé: "valeur"}, categorie:"wildfires", id:"EONET_0000"}. Seul le premier est requis.
 // Pour events, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 // Pour geoJson, les paramètres sont : source, status, limit, days, start, end, magID, magMin, magMax, bbox.
 // Pour categories, les paramètres sont : source, status, limit, days.
@@ -35,7 +35,11 @@ function eonet(input) {
       .then((response) => response.data);
   }
   if (input.field === 'categories') {
-    options.url = `/categories/${input.categorie}`;
+    if (input.categorie) {
+      options.url = `/categories/${input.categorie}`;
+    } else {
+      options.url = `/categories/`;
+    }
     return instance
       .get(options.url, options.params)
       .then((response) => response.data.events);
