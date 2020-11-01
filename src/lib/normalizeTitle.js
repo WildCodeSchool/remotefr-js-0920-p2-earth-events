@@ -1,3 +1,16 @@
+const cardinal = (txt) => {
+  const news = {
+    N: 'Nord',
+    E: 'Est',
+    W: 'Ouest',
+    S: 'Sud',
+  };
+  return txt
+    .split('')
+    .map((c) => news[c])
+    .join('-');
+};
+
 export default (parsable) => {
   let title = parsable;
   let type;
@@ -8,21 +21,27 @@ export default (parsable) => {
   const reg1 = /^(.+)(?:,|\s-)\s([^,]+)$/i.exec(title);
   if (reg1) {
     [title, country] = reg1.slice(1);
-    const reg2 = /^(.+)\s-\s(.+)$/i.exec(title);
-    if (reg2) {
-      [type, title] = reg2.slice(1);
-    }
-    const reg3 = /^(.+),\s([^,]+)$/i.exec(title);
-    if (reg3) {
-      [title, state] = reg3.slice(1);
-    }
-    const reg4 = /^(.+)\s\(([^)]+)\)$/i.exec(title);
-    if (reg4) {
-      [county, title] = reg4.slice(1);
-    } else {
-      county = title;
-      title = type;
+    if (!/volcano$/i.test(title)) {
+      const reg2 = /^(.+)\s-\s(.+)$/i.exec(title);
+      if (reg2) {
+        [type, title] = reg2.slice(1);
+      }
+      const reg3 = /^(.+),\s([^,]+)$/i.exec(title);
+      if (reg3) {
+        [title, state] = reg3.slice(1);
+      }
+      const reg4 = /^(.+)\s\(([^)]+)\)$/i.exec(title);
+      if (reg4) {
+        [county, title] = reg4.slice(1);
+      } else {
+        county = title;
+        title = type;
+      }
+      if (county) {
+        const fixCounty = /^([NEWS]{1,3})\sof\s(.+)$/.exec(county);
+        if (fixCounty) county = `${cardinal(fixCounty[1])} de ${fixCounty[2]}`;
+      }
     }
   }
-  return { title, type, county, state, country };
+  return { title, county, state, country };
 };
