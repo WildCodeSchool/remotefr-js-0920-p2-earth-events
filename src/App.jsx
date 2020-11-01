@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
+import SideNav from './components/SideNav/SideNav';
 
 function App() {
   return (
-    <div className="App">
-      <p />
+    <div>
+      <SideNav />
+      <div id="map">My Fake Map</div>
     </div>
   );
 }
