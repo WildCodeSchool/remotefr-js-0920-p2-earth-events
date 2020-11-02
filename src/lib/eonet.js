@@ -42,10 +42,14 @@ function eonet(input) {
     }
     return instance
       .get(options.url, options.params)
-      .then((response) => response.data.events);
+      .then((response) => response.data);
   }
   if (input.field === 'layers') {
-    options.url = `/layers/${input.categorie}`;
+    if (input.categorie) {
+      options.url = `/layers/${input.categorie}`;
+    } else {
+      options.url = `/layers`;
+    }
     return instance
       .get(options.url, options.params)
       .then((response) => response.data.categories);
