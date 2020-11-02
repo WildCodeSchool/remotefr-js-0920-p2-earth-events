@@ -1,9 +1,7 @@
 import React from 'react';
 import EventPreview from '../EventPreview';
-// import eonet from '../../lib/lj-eonet';
+import eonet from '../../lib/eonet';
 import './style.css';
-
-const eonet = () => Promise.reject(new Error('Waiting for EONET lib')); // placeholder
 
 const CurrentEvents = class CurrentEvents extends React.Component {
   constructor() {
