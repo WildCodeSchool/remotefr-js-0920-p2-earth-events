@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/Contact.css';
 import PropTypes from 'prop-types'; // ES6
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 class Contact extends React.Component {
@@ -20,10 +21,21 @@ class Contact extends React.Component {
    * @param {*} event
    * @memberof Contact
    */
+
   sendMail = (name, email, message) => {
-    console.log(`name is : ${name}`);
-    console.log(`email is : ${email}`);
-    console.log(`message is : ${message}`);
+    return axios
+      .post('http://fakemail.woozy.fr/mailer.php', {
+        name,
+        email,
+        message,
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data.meta.success) {
+          return true;
+        }
+        return false;
+      })
+      .catch(() => false);
   };
 
   /**
@@ -91,7 +103,12 @@ class Contact extends React.Component {
     }
 
     if (!errors.name.length && !errors.email.length && !errors.message.length) {
-      this.sendMail(name, email, message);
+      if (this.sendMail(name, email, message)) {
+        console.log('Mail a bien été envoyer');
+      } else {
+        console.log('Mail Erreur');
+      }
+
       setPanel('close');
       history.push('/');
       return;
