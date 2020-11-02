@@ -43,42 +43,55 @@ class SideNav extends React.Component {
     };
   }
 
+  /**
+   *
+   * @name collapsedYellowPanel
+   * @description gestion de l'ouverture et fermeture du pannel
+   * @param {*} event
+   * @memberof SideNav
+   */
   collapsedYellowPanel = (event) => {
     const { isClose } = this.state;
     const { history } = this.props;
     // Si les chemin son identique alors on referme le panel et on redirect vers "/"
     if (event.target.pathname === window.location.pathname) {
       event.preventDefault();
-      this.setState(() => ({
-        isClose: true,
-      }));
+      this.setPanel('close');
       history.push('/');
       return;
     }
 
     // Si le panel n'est pas fermer, alros on le ferme puis on le re-ouvre
     if (!isClose) {
-      this.setState(() => ({
-        isClose: true,
-      }));
-
+      this.setPanel('close');
       setTimeout(() => {
-        this.setState(() => ({
-          isClose: false,
-        }));
+        this.setPanel('open');
       }, 390);
     } else {
-      this.setState(() => ({
-        isClose: false,
-      }));
+      this.setPanel('open');
     }
   };
 
-  // On ferme le Panel
-  closeYellowPanel = () => {
-    this.setState(() => ({
-      isClose: true,
-    }));
+  /**
+   * @name setPanel
+   * @description Gestion de la fermeture et ouverture du pannel
+   * @memberof SideNav
+   */
+
+  setPanel = (value) => {
+    switch (value) {
+      case 'open':
+        this.setState(() => ({
+          isClose: false,
+        }));
+        break;
+      default:
+      case 'close':
+        this.setState(() => ({
+          isClose: true,
+        }));
+        break;
+    }
   };
 
   render = () => {
@@ -112,7 +125,7 @@ class SideNav extends React.Component {
           <div className="yellow-panel-options">
             <NavLink
               to="/"
-              onClick={this.closeYellowPanel}
+              onClick={() => this.setPanel('close')}
               className="close-button"
             >
               Close Panel
@@ -124,7 +137,13 @@ class SideNav extends React.Component {
               <Route exact path="/opt1" component={FakePage} />
               <Route exact path="/opt2" component={AnotherFake} />
               <Route exact path="/opt3" component={FakePage} />
-              <Route exact path="/contact" component={Contact} />
+              <Route
+                exact
+                path="/contact"
+                key="Contact"
+                render={() => <Contact setPanel={this.setPanel} />}
+              />
+              ;
             </Switch>
           </div>
         </div>
