@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/Contact.css';
 import PropTypes from 'prop-types'; // ES6
+import { withRouter } from 'react-router-dom';
 
 class Contact extends React.Component {
   constructor(props) {
@@ -11,17 +12,42 @@ class Contact extends React.Component {
       message: '',
       errors: { name: [], email: [], message: [] },
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  /**
+   * sendMail
+   * @description Fake SendMail
+   * @param {*} event
+   * @memberof Contact
+   */
+  sendMail = (name, email, message) => {
+    console.log(`name is : ${name}`);
+    console.log(`email is : ${email}`);
+    console.log(`message is : ${message}`);
+  };
+
+  /**
+   * handleChange
+   * @param {*} event
+   * @memberof Contact
+   */
+
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
-  handleSubmit(event) {
+  /**
+   * @name handleSubmit
+   * @description Validate data before send mail
+   * @param {*} event
+   */
+
+  handleSubmit = (event) => {
     let { name, email, message } = this.state;
     const { errors } = this.state;
+    const { history } = this.props;
+    const { setPanel } = this.props;
+
     name = name.trim();
     email = email.trim();
     message = message.trim();
@@ -64,13 +90,16 @@ class Contact extends React.Component {
       );
     }
 
-    // if (sendmail) {
-    //   alert('envoie du message');
-    // }
+    if (!errors.name.length && !errors.email.length && !errors.message.length) {
+      this.sendMail(name, email, message);
+      setPanel('close');
+      history.push('/');
+      return;
+    }
 
     this.setState({ errors });
     event.preventDefault();
-  }
+  };
 
   render = () => {
     const { name, email, message, errors } = this.state;
@@ -111,6 +140,19 @@ class Contact extends React.Component {
   };
 }
 
+Contact.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  setPanel: PropTypes.oneOf(['open', 'close']).isRequired,
+};
+
+/**
+ * @name Errors
+ * @description Show error if array is not empty
+ * @param {*} props
+ * @return html
+ */
 const Errors = (props) => {
   const { v } = props;
   return (
@@ -124,4 +166,4 @@ Errors.propTypes = {
   v: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default Contact;
+export default withRouter(Contact);
