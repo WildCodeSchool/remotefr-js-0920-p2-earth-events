@@ -38,7 +38,7 @@ function eonet(input) {
     if (input.categorie) {
       options.url = `/categories/${input.categorie}`;
     } else {
-      options.url = `/categories/`;
+      options.url = `/categories`;
     }
     return instance
       .get(options.url, options.params)
