@@ -114,6 +114,7 @@ class Contact extends React.Component {
             placeholder="Your name.."
             value={name}
             onChange={this.handleChange}
+            className={errors.name.length ? 'error-border error-shake' : ''}
           />
           <Errors v={errors.name} />
           <input
@@ -123,6 +124,7 @@ class Contact extends React.Component {
             placeholder="Your Email.."
             value={email}
             onChange={this.handleChange}
+            className={errors.email.length ? 'error-border error-shake' : ''}
           />
           <Errors v={errors.email} />
           <textarea
@@ -131,6 +133,7 @@ class Contact extends React.Component {
             placeholder="Write something.."
             value={message}
             onChange={this.handleChange}
+            className={errors.message.length ? 'error-border error-shake' : ''}
           />
           <Errors v={errors.message} />
           <input type="submit" value="Submit" />
