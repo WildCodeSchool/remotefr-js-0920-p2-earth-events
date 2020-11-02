@@ -1,71 +1,46 @@
 /***********************************************************
- - sidebar
+ - Contact
 ***********************************************************/
 
-.logo {
-    max-width: 80%;
-    margin-bottom: 30px;
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #fef0b8;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  resize: vertical;
+  background-color: #fef0b8;
+  font-family: 'Poppins',
+  sans-serif;
 }
 
+textarea {
+  height: 230px;
+}
 
-.sidenav {
-  height: 100%;
-  width: 320px;
-  position: fixed;
-  z-index: 5000;
-  top: 0;
-  left: 0;
+input[type=submit] {
   background-color: #0c0c0c;
-  overflow-x: hidden;
-  padding-top: 20px;
-  -webkit-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
-  -moz-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
-  box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
-}
-
-.titleParameters {
-  color: #FFF;
-  padding: 20px;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.titleParameters::before {
-  content: "> ";
-  color: #fed32c;
-}
-
-
-.menu-button>a {
-  background-color: #2b2b2b;
-  color: #FFF;
-  padding: 20px;
-  margin: 4px 0px;
-  display: flex;
-  text-decoration: none;
-}
-.menu-button>a:hover {
-  background-color: #ffd32d;
-  color: #000;
-}
-
-.menu-button>a.selected {
-  background-color: #ffd32d;
-  color: #000;
-}
-
-.menu-button>a.selected>div:first-child {
-  color: #000;
-}
-
-.menu-button>a>div:first-child {
   color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
 }
 
-.menu-button>a>div:last-child {
-  margin-left: auto;
+input[type=submit]:hover {
+  background-color: #0c0c0c;
+  color: #ffd42d;
 }
 
-.menu-button>a>div:last-child>img {
-  width: 11px;
+.error-contact{
+  color:red;
+  font-weight: bold;
+  font-size:12px;
+}
+
+.error-contact > ul{
+     padding-inline-start: 16px;
 }
