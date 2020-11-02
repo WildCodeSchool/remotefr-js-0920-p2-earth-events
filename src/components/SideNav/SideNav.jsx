@@ -100,7 +100,7 @@ class SideNav extends React.Component {
       <div>
         <div className="sidenav">
           <div>
-            <NavLink to="/">
+            <NavLink to="/" onClick={() => this.setPanel('close')}>
               <img src="images/logo_wild.jpg" className="logo" alt="logo" />
             </NavLink>
           </div>
