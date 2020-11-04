@@ -16,7 +16,7 @@ const menuList = [
     route: '/opt1',
   },
   {
-    name: 'Historique',
+    name: 'History',
     route: '/history',
   },
   {

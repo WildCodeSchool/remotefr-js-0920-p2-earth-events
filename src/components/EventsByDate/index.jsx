@@ -49,18 +49,18 @@ const EventsByDate = class EventsByDate extends React.Component {
     const { dateSelected, currentView, loading, error } = this.state;
     return (
       <section id="EventsByDate">
-        <h2>Événements par date</h2>
+        <h2>History</h2>
         <p className="dateSelect">
           <input type="date" onChange={this.changeDate} />
         </p>
         {error ? <p className="error">{error.message}</p> : ''}
         {!error && dateSelected && loading ? (
-          <p className="loading">Récupération des données…</p>
+          <p className="loading">Loading…</p>
         ) : (
           ''
         )}
         {!error && dateSelected && !loading && !currentView.length ? (
-          <p className="empty">Aucun événement</p>
+          <p className="empty">No Event</p>
         ) : (
           ''
         )}
