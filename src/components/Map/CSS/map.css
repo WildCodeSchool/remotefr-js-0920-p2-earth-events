@@ -4,11 +4,22 @@
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: right;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-end;
 }
 #wildmap {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: right;
+  align-items: flex-start;
+}
+.mapSelector {
+  margin: 2rem;
+  z-index: 10000;
+  color: #0c0c0c;
 }
