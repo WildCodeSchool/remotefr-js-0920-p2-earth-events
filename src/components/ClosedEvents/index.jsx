@@ -1,13 +1,7 @@
 import React from 'react';
-// import EventPreview from '../EventPreview';
-// import eonet from '../../lib/eonet';
+import EventPreview from '../EventPreview';
+import eonet from '../../lib/eonet';
 import './style.css';
-
-// placeholders
-const EventPreview = () => (
-  <p className="placeholder">EventPreview placeholder</p>
-);
-const eonet = () => Promise.reject(new Error('Waiting for EONET lib'));
 
 const ClosedEvents = class ClosedEvents extends React.Component {
   constructor() {
