@@ -1,9 +1,9 @@
 const cardinal = (txt) => {
   const news = {
-    N: 'Nord',
-    E: 'Est',
-    W: 'Ouest',
-    S: 'Sud',
+    N: 'North',
+    E: 'East',
+    W: 'West',
+    S: 'South',
   };
   return txt
     .split('')
@@ -39,7 +39,7 @@ export default (parsable) => {
       }
       if (county) {
         const fixCounty = /^([NEWS]{1,3})\sof\s(.+)$/.exec(county);
-        if (fixCounty) county = `${cardinal(fixCounty[1])} de ${fixCounty[2]}`;
+        if (fixCounty) county = `${cardinal(fixCounty[1])} of ${fixCounty[2]}`;
       }
     }
   }

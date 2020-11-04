@@ -12,7 +12,7 @@ import CurrentEvents from '../CurrentEvents';
 const menuList = [
   // Fake menu
   {
-    name: 'En cours',
+    name: 'Current',
     route: '/current',
   },
   {

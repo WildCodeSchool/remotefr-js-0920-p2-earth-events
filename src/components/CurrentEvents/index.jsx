@@ -36,15 +36,11 @@ const CurrentEvents = class CurrentEvents extends React.Component {
     const { currentView, loading, error } = this.state;
     return (
       <section id="CurrentEvents">
-        <h2>Événements en cours</h2>
+        <h2>Current Events</h2>
         {error ? <p className="error">Erreur: {error.message}</p> : ''}
-        {!error && loading ? (
-          <p className="loading">Récupération des données…</p>
-        ) : (
-          ''
-        )}
+        {!error && loading ? <p className="loading">Loading…</p> : ''}
         {!error && !loading && !currentView.length ? (
-          <p className="empty">Aucun événement</p>
+          <p className="empty">No Event</p>
         ) : (
           ''
         )}

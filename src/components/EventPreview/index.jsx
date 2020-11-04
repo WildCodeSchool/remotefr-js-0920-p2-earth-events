@@ -7,10 +7,10 @@ const datation = (date, className) => {
   const dt = new Date(date);
   return (
     <time className={className} dateTime={date}>
-      {dt.toLocaleString('fr-FR', {
+      {dt.toLocaleString('en-US', {
         weekday: 'short',
         year: 'numeric',
-        month: 'long',
+        month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
@@ -78,7 +78,7 @@ const EventPreview = class EventPreview extends React.Component {
           ''
         )}
         <footer>
-          <p>Source{sources.length > 1 ? 's' : ''} :</p>
+          <p>Source{sources.length > 1 ? 's' : ''}:</p>
           <ul>
             {sources.map((src) => (
               <li key={src.id}>
