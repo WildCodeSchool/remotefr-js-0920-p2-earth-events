@@ -31,6 +31,14 @@ const satMap = {
   style: 'normal',
 };
 
+const dummyMarkers = [
+  [45, 0],
+  [35, 0],
+  [55, 0],
+  [45, 10],
+  [45, -10],
+];
+
 export default class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +65,13 @@ export default class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
+    for (let i = 0; i < dummyMarkers.length; i = +1) {
+      L.marker(dummyMarkers[i])
+        .addTo(this.map)
+        .bindPopup(
+          `I'm an event at ${dummyMarkers[i][0]} and ${dummyMarkers[i][1]}`,
+        );
+    }
   }
 
   componentDidUpdate() {
