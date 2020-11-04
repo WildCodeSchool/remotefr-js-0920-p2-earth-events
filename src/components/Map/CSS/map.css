@@ -1,5 +1,17 @@
 @import url('https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --select-border: #0c0c0c;
+  --select-focus: #ffd42d;
+  --select-arrow: var(--select-border);
+}
+
 .mapContainer {
   margin: 0;
   padding: 0;
@@ -20,6 +32,19 @@
 }
 .mapSelector {
   margin: 2rem;
-  z-index: 10000;
+  z-index: 500;
   color: #0c0c0c;
+  outline: none;
+  font-family: inherit;
+  border: 1px solid #0c0c0c;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0 0.35rem 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #ffd42d;
+  background-image: linear-gradient(to top, #ffcc00, #ffd42d 33%);
+}
+option:hover {
+  background-color: #ffe993;
 }
