@@ -42,15 +42,11 @@ const ClosedEvents = class ClosedEvents extends React.Component {
     const { currentView, loading, error } = this.state;
     return (
       <section id="ClosedEvents">
-        <h2>Événements terminés</h2>
+        <h2>Closed Events</h2>
         {error ? <p className="error">Erreur: {error.message}</p> : ''}
-        {!error && loading ? (
-          <p className="loading">Récupération des données…</p>
-        ) : (
-          ''
-        )}
+        {!error && loading ? <p className="loading">Loading…</p> : ''}
         {!error && !loading && !currentView.length ? (
-          <p className="empty">Aucun événement</p>
+          <p className="empty">No Event</p>
         ) : (
           ''
         )}

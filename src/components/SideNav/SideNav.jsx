@@ -20,7 +20,7 @@ const menuList = [
     route: '/opt2',
   },
   {
-    name: 'Terminés',
+    name: 'Closed',
     route: '/closed',
   },
   {
