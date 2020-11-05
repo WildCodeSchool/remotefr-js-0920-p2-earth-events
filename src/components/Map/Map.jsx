@@ -31,6 +31,9 @@ const satMap = {
   style: 'normal',
 };
 
+const pulsar = L.divIcon({ className: 'pulsar' });
+
+// dummyMarkers à supprimer quand on aura des vrais évènements sur la carte
 const dummyMarkers = [
   [45, 0],
   [35, 0],
@@ -38,6 +41,7 @@ const dummyMarkers = [
   [45, 10],
   [45, -10],
 ];
+// const eonetMarkers=[];
 
 export default class Map extends React.Component {
   constructor(props) {
@@ -65,13 +69,12 @@ export default class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
-    for (let i = 0; i < dummyMarkers.length; i = +1) {
-      L.marker(dummyMarkers[i])
+    dummyMarkers.forEach((dummyMarker) => {
+      L.marker(dummyMarker, { icon: pulsar })
         .addTo(this.map)
-        .bindPopup(
-          `I'm an event at ${dummyMarkers[i][0]} and ${dummyMarkers[i][1]}`,
-        );
-    }
+        .bindPopup(`I'm an event at ${dummyMarker[0]} and ${dummyMarker[1]}`);
+      console.log(dummyMarker);
+    });
   }
 
   componentDidUpdate() {
