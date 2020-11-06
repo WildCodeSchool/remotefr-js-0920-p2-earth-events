@@ -3,6 +3,7 @@ import './css/SideNav.css';
 import './css/YellowPanel.css';
 import PropTypes from 'prop-types'; // ES6
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
+import Contact from '../Contact';
 import CurrentEvents from '../CurrentEvents';
 import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
@@ -26,8 +27,8 @@ const menuList = [
     route: '/closed',
   },
   {
-    name: 'Option N° 4',
-    route: '/opt4',
+    name: 'Contact',
+    route: '/contact',
   },
 ];
 
@@ -43,42 +44,55 @@ class SideNav extends React.Component {
     };
   }
 
+  /**
+   *
+   * @name collapsedYellowPanel
+   * @description gestion de l'ouverture et fermeture du pannel
+   * @param {*} event
+   * @memberof SideNav
+   */
   collapsedYellowPanel = (event) => {
     const { isClose } = this.state;
     const { history } = this.props;
     // Si les chemin son identique alors on referme le panel et on redirect vers "/"
     if (event.target.pathname === window.location.pathname) {
       event.preventDefault();
-      this.setState(() => ({
-        isClose: true,
-      }));
+      this.setPanel('close');
       history.push('/');
       return;
     }
 
     // Si le panel n'est pas fermer, alros on le ferme puis on le re-ouvre
     if (!isClose) {
-      this.setState(() => ({
-        isClose: true,
-      }));
-
+      this.setPanel('close');
       setTimeout(() => {
-        this.setState(() => ({
-          isClose: false,
-        }));
+        this.setPanel('open');
       }, 390);
     } else {
-      this.setState(() => ({
-        isClose: false,
-      }));
+      this.setPanel('open');
     }
   };
 
-  // On ferme le Panel
-  closeYellowPanel = () => {
-    this.setState(() => ({
-      isClose: true,
-    }));
+  /**
+   * @name setPanel
+   * @description Gestion de la fermeture et ouverture du pannel
+   * @memberof SideNav
+   */
+
+  setPanel = (value) => {
+    switch (value) {
+      case 'open':
+        this.setState(() => ({
+          isClose: false,
+        }));
+        break;
+      default:
+      case 'close':
+        this.setState(() => ({
+          isClose: true,
+        }));
+        break;
+    }
   };
 
   render = () => {
@@ -87,7 +101,7 @@ class SideNav extends React.Component {
       <div>
         <div className="sidenav">
           <div>
-            <NavLink to="/">
+            <NavLink to="/" onClick={() => this.setPanel('close')}>
               <img src="images/logo_wild.jpg" className="logo" alt="logo" />
             </NavLink>
           </div>
@@ -112,7 +126,7 @@ class SideNav extends React.Component {
           <div className="yellow-panel-options">
             <NavLink
               to="/"
-              onClick={this.closeYellowPanel}
+              onClick={() => this.setPanel('close')}
               className="close-button"
             >
               Close Panel
@@ -121,10 +135,16 @@ class SideNav extends React.Component {
           <div className="yellow-panel-container">
             <Switch>
               <Route exact path="/" />
+
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
-              <Route exact path="/opt4" component={AnotherFake} />
+                            <Route
+                exact
+                path="/contact"
+                key="Contact"
+                render={() => <Contact setPanel={this.setPanel} />}
+              />
             </Switch>
           </div>
         </div>
