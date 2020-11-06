@@ -1,0 +1,85 @@
+@import url('https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.mapContainer {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+#wildmap {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: right;
+  align-items: flex-start;
+}
+.mapSelector {
+  margin: 2rem;
+  z-index: 500;
+  color: #0c0c0c;
+  outline: none;
+  font-family: inherit;
+  border: 1px solid #0c0c0c;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0 0.35rem 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #ffd42d;
+  background-image: linear-gradient(to top, #ffcc00, #ffd42d 33%);
+}
+option:hover {
+  background-color: #ffe993;
+}
+.pulsar {
+  position: absolute;
+  background: #ffd42d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255, 177, 66, 1);
+  margin: 1rem;
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+  animation: pulsed 2s infinite;
+}
+@keyframes pulsed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 177, 66, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+  }
+}
+.pulsar:hover {
+  background: #ff2d2d;
+  box-shadow: 0 0 0 0 rgb(255, 66, 66);
+  animation: hoverPulsed 2s infinite;
+}
+@keyframes hoverPulsed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 66, 66, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 66, 66, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 66, 66, 0);
+  }
+}
