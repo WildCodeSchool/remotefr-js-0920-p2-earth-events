@@ -3,7 +3,7 @@ import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
 
-const ClosedEvents = class ClosedEvents extends React.Component {
+class ClosedEvents extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -21,7 +21,6 @@ const ClosedEvents = class ClosedEvents extends React.Component {
         days: 1,
       },
     })
-      .catch((error) => this.setState({ loading: false, error }))
       .then((data) => {
         if (data) {
           this.setState({
@@ -29,22 +28,21 @@ const ClosedEvents = class ClosedEvents extends React.Component {
             loading: false,
           });
         }
-      });
+      })
+      .catch((error) => this.setState({ loading: false, error }));
   }
 
   render() {
     const { currentView, loading, error } = this.state;
     return (
-      <section id="ClosedEvents">
+      <section className="ClosedEvents">
         <h2>Closed Events</h2>
-        {error ? <p className="error">Erreur: {error.message}</p> : ''}
-        {!error && loading ? <p className="loading">Loading…</p> : ''}
-        {!error && !loading && !currentView.length ? (
+        {error && <p className="error">Erreur: {error.message}</p>}
+        {!error && loading && <p className="loading">Loading…</p>}
+        {!error && !loading && !currentView.length && (
           <p className="empty">No Event</p>
-        ) : (
-          ''
         )}
-        {!error && !loading && currentView.length ? (
+        {!error && !loading && currentView.length && (
           <ol>
             {currentView.map((event) => (
               <li key={event.id}>
@@ -52,12 +50,10 @@ const ClosedEvents = class ClosedEvents extends React.Component {
               </li>
             ))}
           </ol>
-        ) : (
-          ''
         )}
       </section>
     );
   }
-};
+}
 
 export default ClosedEvents;
