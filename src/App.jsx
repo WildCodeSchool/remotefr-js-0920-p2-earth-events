@@ -1,12 +1,13 @@
 import React from 'react';
 // import './App.css';
 import SideNav from './components/SideNav/SideNav';
+import Map from './components/Map/Map';
 
 function App() {
   return (
     <div>
       <SideNav />
-      <div id="map">My Fake Map</div>
+      <Map />
     </div>
   );
 }
