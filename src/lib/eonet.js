@@ -20,9 +20,7 @@ function eonet(input) {
     } else {
       options.url = '/events';
     }
-    return instance
-      .get(options.url, options.params)
-      .then((response) => response.data);
+    return instance.get(options.url, options).then((response) => response.data);
   }
   if (input.field === 'geoJson') {
     if (input.id) {
@@ -30,9 +28,7 @@ function eonet(input) {
     } else {
       options.url = '/events/geojson';
     }
-    return instance
-      .get(options.url, options.params)
-      .then((response) => response.data);
+    return instance.get(options.url, options).then((response) => response.data);
   }
   if (input.field === 'categories') {
     if (input.categorie) {
@@ -40,9 +36,7 @@ function eonet(input) {
     } else {
       options.url = `/categories`;
     }
-    return instance
-      .get(options.url, options.params)
-      .then((response) => response.data);
+    return instance.get(options.url, options).then((response) => response.data);
   }
   if (input.field === 'layers') {
     if (input.categorie) {
@@ -51,7 +45,7 @@ function eonet(input) {
       options.url = `/layers`;
     }
     return instance
-      .get(options.url, options.params)
+      .get(options.url, options)
       .then((response) => response.data.categories);
   }
   return Promise.reject(new Error('Something went wrong (bad parameters)'));
