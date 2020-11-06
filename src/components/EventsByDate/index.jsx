@@ -31,7 +31,7 @@ class EventsByDate extends React.Component {
         if (data) {
           this.setState({
             currentView: data.events,
-            error: false,
+            loading: false,
           });
         }
       })
