@@ -2,9 +2,9 @@
  - Contact
 ***********************************************************/
 
-input,
-select,
-textarea {
+.contact-forms>input,
+.contact-forms>select,
+.contact-forms>textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #fef0b8;
@@ -17,11 +17,11 @@ textarea {
   sans-serif;
 }
 
-textarea {
+.contact-forms>textarea {
   height: 230px;
 }
 
-input[type=submit] {
+.contact-forms>input[type=submit] {
   background-color: #0c0c0c;
   color: white;
   padding: 12px 20px;
@@ -30,7 +30,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-input[type=submit]:hover {
+.contact-forms>input[type=submit]:hover {
   background-color: #0c0c0c;
   color: #ffd42d;
 }
