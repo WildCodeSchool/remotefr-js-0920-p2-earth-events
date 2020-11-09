@@ -32,10 +32,6 @@ const menuList = [
   },
 ];
 
-const AnotherFake = () => {
-  return <h3>Another Fake Page</h3>;
-};
-
 class SideNav extends React.Component {
   constructor(props) {
     super(props);
@@ -139,7 +135,7 @@ class SideNav extends React.Component {
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
-                            <Route
+              <Route
                 exact
                 path="/contact"
                 key="Contact"
