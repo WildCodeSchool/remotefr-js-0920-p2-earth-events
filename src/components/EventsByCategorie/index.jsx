@@ -1,6 +1,7 @@
 import React from 'react';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
+import eventSorter from '../../lib/eventSorter';
 import './style.css';
 
 class EventsByCategorie extends React.Component {
@@ -70,6 +71,7 @@ class EventsByCategorie extends React.Component {
               else currentView.push(event);
             });
         });
+        currentView.sort(eventSorter);
         categories[findView].events = currentView;
         this.setState({
           currentCategorie: nextCategorie,
