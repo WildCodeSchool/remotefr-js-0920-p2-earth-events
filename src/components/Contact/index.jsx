@@ -123,7 +123,7 @@ class Contact extends React.Component {
     return (
       <div>
         <h2>Contact</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="contact-forms">
           <input
             type="text"
             id="name"

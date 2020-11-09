@@ -125,7 +125,6 @@ export default class Map extends React.Component {
             className="mapSelector"
             value={value}
             onChange={this.handleChange}
-            size="3"
           >
             <option value="light map">Light map</option>
             <option value="dark map">Dark map</option>
