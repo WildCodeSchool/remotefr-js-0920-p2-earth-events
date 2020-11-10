@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import L from 'leaflet';
 import reduxActions from '../../redux/actions';
@@ -35,15 +36,6 @@ const satMap = {
 
 const pulsar = L.divIcon({ className: 'pulsar' });
 
-// dummyMarkers à supprimer quand on aura des vrais évènements sur la carte
-const dummyMarkers = [
-  [45, 0],
-  [35, 0],
-  [55, 0],
-  [45, 10],
-  [45, -10],
-];
-
 class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -70,15 +62,12 @@ class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
-    dummyMarkers.forEach((dummyMarker) => {
-      L.marker(dummyMarker, { icon: pulsar })
-        .addTo(this.map)
-        .bindPopup(`I'm an event at ${dummyMarker[0]} and ${dummyMarker[1]}`);
-      console.log(dummyMarker);
-    });
+    this.layerGroup = new L.LayerGroup();
+    this.layerGroup.addTo(this.map);
   }
 
   componentDidUpdate() {
+    const { currentView } = this.props;
     L.tileLayer(this.mapPicker('tileLayer'), {
       attribution: this.mapPicker('attribution'),
       minZoom: 1,
@@ -96,6 +85,17 @@ class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
+    this.layerGroup.clearLayers();
+    currentView.forEach((event) => {
+      event.geometry.forEach((feature) => {
+        const marker = [...feature.coordinates].reverse();
+        this.layerGroup.addLayer(
+          L.marker(marker, { icon: pulsar }).bindPopup(
+            `<p>${event.title}<br/>${feature.date}</p>`,
+          ),
+        );
+      });
+    });
   }
 
   handleChange(event) {
@@ -137,4 +137,12 @@ class Map extends React.Component {
   }
 }
 
-export default connect(null, reduxActions)(Map);
+Map.propTypes = {
+  currentView: PropTypes.shape.isRequired,
+};
+
+export default connect((state = {}) => {
+  return {
+    currentView: state.mapEvents.currentView,
+  };
+}, reduxActions)(Map);
