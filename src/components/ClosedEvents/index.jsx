@@ -17,12 +17,12 @@ class ClosedEvents extends React.Component {
   }
 
   componentDidMount() {
-    const { updateMapEvents } = this.props;
+    const { updateMapEvents, updateMapBounds } = this.props;
     eonet({
       field: 'events',
       params: {
         status: 'closed',
-        limit: 50,
+        limit: 30,
       },
     })
       .then((data) => {
@@ -32,6 +32,7 @@ class ClosedEvents extends React.Component {
             loading: false,
           });
           updateMapEvents(data.events);
+          updateMapBounds(data.events);
         }
       })
       .catch((error) => this.setState({ loading: false, error }));
@@ -63,6 +64,7 @@ class ClosedEvents extends React.Component {
 
 ClosedEvents.propTypes = {
   updateMapEvents: PropTypes.func.isRequired,
+  updateMapBounds: PropTypes.func.isRequired,
 };
 
 export default connect(null, reduxActions)(ClosedEvents);

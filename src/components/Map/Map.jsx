@@ -96,10 +96,16 @@ class Map extends React.Component {
         );
       });
     });
+    this.focus();
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+  }
+
+  focus() {
+    const { bounds } = this.props;
+    if (bounds && bounds.length) this.map.flyToBounds(bounds, { maxZoom: 8 });
   }
 
   mapPicker(param) {
@@ -138,11 +144,17 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  currentView: PropTypes.shape.isRequired,
+  currentView: PropTypes.arrayOf(PropTypes.shape),
+  bounds: PropTypes.arrayOf(PropTypes.shape),
+};
+Map.defaultProps = {
+  currentView: [],
+  bounds: [],
 };
 
 export default connect((state = {}) => {
   return {
     currentView: state.mapEvents.currentView,
+    bounds: state.mapEvents.bounds,
   };
 }, reduxActions)(Map);
