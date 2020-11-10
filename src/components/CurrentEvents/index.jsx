@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
@@ -16,6 +17,7 @@ class CurrentEvents extends React.Component {
   }
 
   componentDidMount() {
+    const { updateMapEvents } = this.props;
     eonet({
       field: 'events',
       params: {
@@ -30,6 +32,7 @@ class CurrentEvents extends React.Component {
             currentView: data.events,
             loading: false,
           });
+          updateMapEvents(data.events);
         }
       });
   }
@@ -61,5 +64,9 @@ class CurrentEvents extends React.Component {
     );
   }
 }
+
+CurrentEvents.propTypes = {
+  updateMapEvents: PropTypes.func.isRequired,
+};
 
 export default connect(null, reduxActions)(CurrentEvents);

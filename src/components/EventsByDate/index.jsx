@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
@@ -17,6 +18,7 @@ class EventsByDate extends React.Component {
   }
 
   changeDate = (event) => {
+    const { updateMapEvents } = this.props;
     this.setState({
       loading: true,
       error: false,
@@ -35,6 +37,7 @@ class EventsByDate extends React.Component {
             currentView: data.events,
             loading: false,
           });
+          updateMapEvents(data.events);
         }
       })
       .catch((error) => this.setState({ loading: false, error }));
@@ -68,5 +71,9 @@ class EventsByDate extends React.Component {
     );
   }
 }
+
+EventsByDate.propTypes = {
+  updateMapEvents: PropTypes.func.isRequired,
+};
 
 export default connect(null, reduxActions)(EventsByDate);
