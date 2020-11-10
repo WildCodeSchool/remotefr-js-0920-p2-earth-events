@@ -49,7 +49,7 @@ class CurrentEvents extends React.Component {
         ) : (
           ''
         )}
-        {!error && !loading && currentView.length ? (
+        {!error && !loading && Boolean(currentView.length) ? (
           <ol>
             {currentView.map((event) => (
               <li key={event.id}>

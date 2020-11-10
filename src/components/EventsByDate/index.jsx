@@ -58,7 +58,7 @@ class EventsByDate extends React.Component {
         {!error && dateSelected && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}
-        {!error && dateSelected && !loading && currentView.length && (
+        {!error && dateSelected && !loading && Boolean(currentView.length) && (
           <ol>
             {currentView.map((event) => (
               <li key={event.id}>

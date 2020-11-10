@@ -22,7 +22,7 @@ class ClosedEvents extends React.Component {
       field: 'events',
       params: {
         status: 'closed',
-        days: 1,
+        limit: 50,
       },
     })
       .then((data) => {
@@ -47,7 +47,7 @@ class ClosedEvents extends React.Component {
         {!error && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}
-        {!error && !loading && currentView.length && (
+        {!error && !loading && Boolean(currentView.length) && (
           <ol>
             {currentView.map((event) => (
               <li key={event.id}>
