@@ -26,9 +26,14 @@ class EventPreview extends React.Component {
       state,
       country,
       sources,
+      closed,
+      id,
     } = this.event;
     return (
-      <article className="EventPreview">
+      <article
+        className={closed ? 'EventPreview closed' : 'EventPreview active'}
+        id={id}
+      >
         <h2>{title}</h2>
         {categories.length ? (
           <ul className="categories">
