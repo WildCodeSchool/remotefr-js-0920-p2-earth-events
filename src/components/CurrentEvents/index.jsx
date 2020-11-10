@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
 
-const CurrentEvents = class CurrentEvents extends React.Component {
-  constructor() {
-    super();
+class CurrentEvents extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       loading: true,
       currentView: [],
@@ -58,6 +60,6 @@ const CurrentEvents = class CurrentEvents extends React.Component {
       </section>
     );
   }
-};
+}
 
-export default CurrentEvents;
+export default connect(null, reduxActions)(CurrentEvents);

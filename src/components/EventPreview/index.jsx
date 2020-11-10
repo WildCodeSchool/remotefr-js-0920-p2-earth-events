@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import normalizeTitle from '../../lib/normalizeTitle';
 import './style.css';
 
@@ -19,7 +21,7 @@ const datation = (date, className) => {
   );
 };
 
-const EventPreview = class EventPreview extends React.Component {
+class EventPreview extends React.Component {
   constructor(props) {
     super(props);
     this.event = { ...props.event, ...normalizeTitle(props.event.title) };
@@ -90,7 +92,7 @@ const EventPreview = class EventPreview extends React.Component {
       </article>
     );
   }
-};
+}
 
 EventPreview.propTypes = {
   event: PropTypes.shape({
@@ -103,4 +105,4 @@ EventPreview.propTypes = {
   }).isRequired,
 };
 
-export default EventPreview;
+export default connect(null, reduxActions)(EventPreview);

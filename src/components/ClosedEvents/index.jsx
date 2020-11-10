@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
@@ -56,4 +58,4 @@ class ClosedEvents extends React.Component {
   }
 }
 
-export default ClosedEvents;
+export default connect(null, reduxActions)(ClosedEvents);

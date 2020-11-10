@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
@@ -67,4 +69,4 @@ class EventsByDate extends React.Component {
   }
 }
 
-export default EventsByDate;
+export default connect(null, reduxActions)(EventsByDate);

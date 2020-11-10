@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import L from 'leaflet';
+import reduxActions from '../../redux/actions';
 import './CSS/map.css';
 
 const lightMap = {
@@ -41,9 +43,8 @@ const dummyMarkers = [
   [45, 10],
   [45, -10],
 ];
-// const eonetMarkers=[];
 
-export default class Map extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: 'light map' };
@@ -135,3 +136,5 @@ export default class Map extends React.Component {
     );
   }
 }
+
+export default connect(null, reduxActions)(Map);
