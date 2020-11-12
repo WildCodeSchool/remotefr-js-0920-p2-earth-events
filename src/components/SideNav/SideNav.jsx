@@ -4,6 +4,7 @@ import './css/YellowPanel.css';
 import PropTypes from 'prop-types'; // ES6
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 import Contact from '../Contact';
+import Calendar from '../Calendar';
 import CurrentEvents from '../CurrentEvents';
 import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
@@ -25,6 +26,10 @@ const menuList = [
   {
     name: 'Closed',
     route: '/closed',
+  },
+  {
+    name: 'Calendar',
+    route: '/calendar',
   },
   {
     name: 'Contact',
@@ -135,6 +140,13 @@ class SideNav extends React.Component {
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
+
+              <Route
+                exact
+                path="/calendar"
+                key="calendar"
+                render={() => <Calendar setPanel={this.setPanel} />}
+              />
               <Route
                 exact
                 path="/contact"
