@@ -87,14 +87,28 @@ class Map extends React.Component {
     }).addTo(this.map);
     this.layerGroup.clearLayers();
     currentView.forEach((event) => {
-      event.geometry.forEach((feature) => {
-        const marker = [...feature.coordinates].reverse();
-        this.layerGroup.addLayer(
-          L.marker(marker, { icon: pulsar }).bindPopup(
-            `<p>${event.title}<br/>${feature.date}</p>`,
-          ),
-        );
-      });
+      const subLayerGroup = new L.LayerGroup();
+      this.layerGroup.addLayer(subLayerGroup);
+      if (event.geometry.length > 1) {
+        const line = L.polyline([], {
+          color: event.closed ? 'slategrey' : 'darkred',
+          weight: event.closed ? 5 : 7,
+        });
+        line.bindPopup(`<p>${event.title}</p>`);
+        subLayerGroup.addLayer(line);
+        event.geometry.forEach((feature) => {
+          if (feature.coordinates) {
+            const coord = [...feature.coordinates].reverse();
+            line.addLatLng(coord);
+          }
+        });
+      } else {
+        L.marker([...event.geometry[0].coordinates].reverse(), {
+          icon: pulsar,
+        })
+          .bindPopup(`<p>${event.title}<br/>${event.geometry[0].date}</p>`)
+          .addTo(subLayerGroup);
+      }
     });
     this.focus();
   }
