@@ -33,6 +33,7 @@ class EventsByDate extends React.Component {
             currentView: data.events,
             loading: false,
           });
+          console.log(event.target.value);
         }
       })
       .catch((error) => this.setState({ loading: false, error }));
