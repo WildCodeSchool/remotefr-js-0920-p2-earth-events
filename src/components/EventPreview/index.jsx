@@ -13,8 +13,8 @@ class EventPreview extends React.Component {
   }
 
   focus() {
-    const { updateMapBounds } = this.props;
-    updateMapBounds([this.event]);
+    const { updateMapBoundsFromEvents } = this.props;
+    updateMapBoundsFromEvents([this.event]);
   }
 
   render() {
@@ -84,7 +84,7 @@ EventPreview.propTypes = {
     state: PropTypes.string,
     country: PropTypes.string,
   }).isRequired,
-  updateMapBounds: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
 export default connect(null, reduxActions)(EventPreview);

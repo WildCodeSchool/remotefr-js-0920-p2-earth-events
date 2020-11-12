@@ -18,7 +18,7 @@ class EventsByDate extends React.Component {
   }
 
   changeDate = (event) => {
-    const { updateMapEvents, updateMapBounds } = this.props;
+    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
     this.setState({
       loading: true,
       error: false,
@@ -38,7 +38,7 @@ class EventsByDate extends React.Component {
             loading: false,
           });
           updateMapEvents(data.events);
-          updateMapBounds(data.events);
+          updateMapBoundsFromEvents(data.events);
         }
       })
       .catch((error) => this.setState({ loading: false, error }));
@@ -75,7 +75,7 @@ class EventsByDate extends React.Component {
 
 EventsByDate.propTypes = {
   updateMapEvents: PropTypes.func.isRequired,
-  updateMapBounds: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
 export default connect(null, reduxActions)(EventsByDate);

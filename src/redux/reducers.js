@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
 const mapEvents = (state = {}, action) => {
-  const bounds = [];
   switch (action.type) {
     case 'UPDATE_MAP_EVENTS':
       return {
@@ -9,16 +8,9 @@ const mapEvents = (state = {}, action) => {
         currentView: action.payload.events,
       };
     case 'UPDATE_MAP_BOUNDS':
-      if (action.payload.events)
-        action.payload.events.forEach((event) => {
-          if (event.geometry)
-            event.geometry.forEach((geo) =>
-              bounds.push([...geo.coordinates].reverse()),
-            );
-        });
       return {
         ...state,
-        bounds,
+        bounds: action.payload.bounds,
       };
     default:
       return state;

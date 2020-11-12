@@ -17,7 +17,7 @@ class CurrentEvents extends React.Component {
   }
 
   componentDidMount() {
-    const { updateMapEvents, updateMapBounds } = this.props;
+    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
     eonet({
       field: 'events',
       params: {
@@ -33,7 +33,7 @@ class CurrentEvents extends React.Component {
             loading: false,
           });
           updateMapEvents(data.events);
-          updateMapBounds(data.events);
+          updateMapBoundsFromEvents(data.events);
         }
       });
   }
@@ -68,7 +68,7 @@ class CurrentEvents extends React.Component {
 
 CurrentEvents.propTypes = {
   updateMapEvents: PropTypes.func.isRequired,
-  updateMapBounds: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
 export default connect(null, reduxActions)(CurrentEvents);
