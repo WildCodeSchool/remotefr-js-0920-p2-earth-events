@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import eventSorter from '../../lib/eventSorter';
@@ -31,6 +34,7 @@ class EventsByCategorie extends React.Component {
   }
 
   loadCategorie = (ev) => {
+    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
     const nextCategorie = ev.target.value;
     const { categories } = this.state;
     let currentView = [];
@@ -79,6 +83,8 @@ class EventsByCategorie extends React.Component {
           currentView,
           loading: false,
         });
+        updateMapEvents(currentView);
+        updateMapBoundsFromEvents(currentView);
       })
       .catch((error) => {
         this.setState({ loading: false, error });
@@ -125,4 +131,9 @@ class EventsByCategorie extends React.Component {
   }
 }
 
-export default EventsByCategorie;
+EventsByCategorie.propTypes = {
+  updateMapEvents: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
+};
+
+export default connect(null, reduxActions)(EventsByCategorie);
