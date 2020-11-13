@@ -9,8 +9,20 @@
 }
 .EventPreview h2 {
   margin: 0 0 1rem;
+  padding: 0 !important;
+  color: #fff !important;
   font-size: 1.3em;
 }
+.EventPreview > h2::before {
+  content: '•' !important;
+}
+.EventPreview.active > h2::before {
+  color: darkred !important;
+}
+.EventPreview.closed > h2::before {
+  color: slategrey !important;
+}
+
 .EventPreview summary {
   cursor: pointer;
 }

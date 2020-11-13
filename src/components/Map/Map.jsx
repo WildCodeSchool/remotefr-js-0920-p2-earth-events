@@ -1,6 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import L from 'leaflet';
+import reduxActions from '../../redux/actions';
 import './CSS/map.css';
+
+const dateFormat = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+};
 
 const lightMap = {
   tileLayer: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png',
@@ -33,17 +42,7 @@ const satMap = {
 
 const pulsar = L.divIcon({ className: 'pulsar' });
 
-// dummyMarkers à supprimer quand on aura des vrais évènements sur la carte
-const dummyMarkers = [
-  [45, 0],
-  [35, 0],
-  [55, 0],
-  [45, 10],
-  [45, -10],
-];
-// const eonetMarkers=[];
-
-export default class Map extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: 'light map' };
@@ -69,15 +68,12 @@ export default class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
-    dummyMarkers.forEach((dummyMarker) => {
-      L.marker(dummyMarker, { icon: pulsar })
-        .addTo(this.map)
-        .bindPopup(`I'm an event at ${dummyMarker[0]} and ${dummyMarker[1]}`);
-      console.log(dummyMarker);
-    });
+    this.layerGroup = new L.LayerGroup();
+    this.layerGroup.addTo(this.map);
   }
 
   componentDidUpdate() {
+    const { currentView } = this.props;
     L.tileLayer(this.mapPicker('tileLayer'), {
       attribution: this.mapPicker('attribution'),
       minZoom: 1,
@@ -95,10 +91,63 @@ export default class Map extends React.Component {
       format: 'image/jpeg',
       style: 'normal',
     }).addTo(this.map);
+    this.layerGroup.clearLayers();
+    currentView.forEach((event) => {
+      const subLayerGroup = new L.LayerGroup();
+      this.layerGroup.addLayer(subLayerGroup);
+      if (event.geometry.length > 1) {
+        const line = L.polyline([], {
+          color: event.closed ? 'slategrey' : 'darkred',
+          weight: event.closed ? 5 : 7,
+        });
+        line.bindPopup(`<p>
+          ${event.title}
+          <br/>
+          <time datetime=${event.geometry[0].date}>
+            ${new Date(event.geometry[0].date).toLocaleString(
+              'en-US',
+              dateFormat,
+            )}
+          </time> - 
+          <time datetime=${event.geometry[event.geometry.length - 1].date}>
+            ${new Date(
+              event.geometry[event.geometry.length - 1].date,
+            ).toLocaleString('en-US', dateFormat)}
+          </time>
+        </p>`);
+        subLayerGroup.addLayer(line);
+        event.geometry.forEach((feature) => {
+          if (feature.coordinates) {
+            const coord = [...feature.coordinates].reverse();
+            line.addLatLng(coord);
+          }
+        });
+      } else {
+        L.marker([...event.geometry[0].coordinates].reverse(), {
+          icon: pulsar,
+        })
+          .bindPopup(
+            `<p>
+              ${event.title}
+              <br/>
+              <time datetime=${event.geometry[0].date}>${new Date(
+              event.geometry[0].date,
+            ).toLocaleString('en-US', dateFormat)}</time>
+            </p>`,
+          )
+          .addTo(subLayerGroup);
+      }
+    });
+    this.focus();
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+  }
+
+  focus() {
+    const { bounds } = this.props;
+    if (bounds && bounds.length) this.map.flyToBounds(bounds, { maxZoom: 8 });
   }
 
   mapPicker(param) {
@@ -135,3 +184,19 @@ export default class Map extends React.Component {
     );
   }
 }
+
+Map.propTypes = {
+  currentView: PropTypes.arrayOf(PropTypes.shape),
+  bounds: PropTypes.arrayOf(PropTypes.shape),
+};
+Map.defaultProps = {
+  currentView: [],
+  bounds: [],
+};
+
+export default connect((state = {}) => {
+  return {
+    currentView: state.mapEvents.currentView,
+    bounds: state.mapEvents.bounds,
+  };
+}, reduxActions)(Map);
