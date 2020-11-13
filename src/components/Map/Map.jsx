@@ -5,6 +5,12 @@ import L from 'leaflet';
 import reduxActions from '../../redux/actions';
 import './CSS/map.css';
 
+const dateFormat = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+};
+
 const lightMap = {
   tileLayer: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png',
   maxZoom: 20,
@@ -94,7 +100,21 @@ class Map extends React.Component {
           color: event.closed ? 'slategrey' : 'darkred',
           weight: event.closed ? 5 : 7,
         });
-        line.bindPopup(`<p>${event.title}</p>`);
+        line.bindPopup(`<p>
+          ${event.title}
+          <br/>
+          <time datetime=${event.geometry[0].date}>
+            ${new Date(event.geometry[0].date).toLocaleString(
+              'en-US',
+              dateFormat,
+            )}
+          </time> - 
+          <time datetime=${event.geometry[event.geometry.length - 1].date}>
+            ${new Date(
+              event.geometry[event.geometry.length - 1].date,
+            ).toLocaleString('en-US', dateFormat)}
+          </time>
+        </p>`);
         subLayerGroup.addLayer(line);
         event.geometry.forEach((feature) => {
           if (feature.coordinates) {
@@ -106,7 +126,15 @@ class Map extends React.Component {
         L.marker([...event.geometry[0].coordinates].reverse(), {
           icon: pulsar,
         })
-          .bindPopup(`<p>${event.title}<br/>${event.geometry[0].date}</p>`)
+          .bindPopup(
+            `<p>
+              ${event.title}
+              <br/>
+              <time datetime=${event.geometry[0].date}>${new Date(
+              event.geometry[0].date,
+            ).toLocaleString('en-US', dateFormat)}</time>
+            </p>`,
+          )
           .addTo(subLayerGroup);
       }
     });
