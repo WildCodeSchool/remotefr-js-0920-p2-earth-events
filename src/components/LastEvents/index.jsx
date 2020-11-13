@@ -20,7 +20,7 @@ export default class LastEvents extends React.Component {
       field: 'events',
       params: {
         start: lastVisit,
-        end: new Date().toISOString(),
+        end: new Date().toISOString().slice(0, 10),
       },
     })
       .then((data) => {

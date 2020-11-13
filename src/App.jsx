@@ -9,7 +9,7 @@ function App() {
   function handleCount() {
     setTimeout(function () {
       setStorageCount(storageCount + 1);
-    }, 10000);
+    }, 15000);
   }
   handleCount();
   useEffect(() => {
