@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
 
-export default class LastEvents extends React.Component {
+class LastEvents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +17,11 @@ export default class LastEvents extends React.Component {
   }
 
   componentDidMount() {
-    const { lastVisit } = this.props;
+    const {
+      lastVisit,
+      updateMapEvents,
+      updateMapBoundsFromEvents,
+    } = this.props;
     eonet({
       field: 'events',
       params: {
@@ -29,6 +35,8 @@ export default class LastEvents extends React.Component {
             currentView: data.events,
             loading: false,
           });
+          updateMapEvents(data.events);
+          updateMapBoundsFromEvents(data.events);
         }
       })
       .catch((error) => this.setState({ loading: false, error }));
@@ -64,4 +72,8 @@ export default class LastEvents extends React.Component {
 
 LastEvents.propTypes = {
   lastVisit: PropTypes.string.isRequired,
+  updateMapEvents: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
+
+export default connect(null, reduxActions)(LastEvents);
