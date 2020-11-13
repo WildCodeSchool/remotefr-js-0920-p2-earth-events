@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
 
-const CurrentEvents = class CurrentEvents extends React.Component {
-  constructor() {
-    super();
+class CurrentEvents extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       loading: true,
       currentView: [],
@@ -14,6 +17,7 @@ const CurrentEvents = class CurrentEvents extends React.Component {
   }
 
   componentDidMount() {
+    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
     eonet({
       field: 'events',
       params: {
@@ -28,6 +32,8 @@ const CurrentEvents = class CurrentEvents extends React.Component {
             currentView: data.events,
             loading: false,
           });
+          updateMapEvents(data.events);
+          updateMapBoundsFromEvents(data.events);
         }
       });
   }
@@ -58,6 +64,11 @@ const CurrentEvents = class CurrentEvents extends React.Component {
       </section>
     );
   }
+}
+
+CurrentEvents.propTypes = {
+  updateMapEvents: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
-export default CurrentEvents;
+export default connect(null, reduxActions)(CurrentEvents);

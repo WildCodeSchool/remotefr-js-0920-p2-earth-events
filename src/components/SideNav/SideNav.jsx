@@ -8,6 +8,7 @@ import CurrentEvents from '../CurrentEvents';
 import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
 import LastEvents from '../LastEvents';
+import EventsByCategorie from '../EventsByCategorie';
 
 // ***************************************************
 // FAKE Page and Data
@@ -30,6 +31,10 @@ const menuList = [
   {
     name: 'Last events',
     route: '/last',
+  },
+  {
+    name: 'Categories',
+    route: '/categories',
   },
   {
     name: 'Contact',
@@ -137,10 +142,10 @@ class SideNav extends React.Component {
           <div className="yellow-panel-container">
             <Switch>
               <Route exact path="/" />
-
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
+              <Route exact path="/categories" component={EventsByCategorie} />
               <Route
                 exact
                 path="/last"
