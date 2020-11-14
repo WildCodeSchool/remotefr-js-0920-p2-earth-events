@@ -9,8 +9,9 @@ function App() {
     if (window.localStorage.getItem('lastVisit')) {
       setLastVisit(window.localStorage.getItem('lastVisit').slice(0, 10));
     } else {
-      window.localStorage.setItem('lastVisit', new Date().toISOString());
+      setLastVisit('');
     }
+    window.localStorage.setItem('lastVisit', new Date().toISOString());
   }, []);
   return (
     <div>
