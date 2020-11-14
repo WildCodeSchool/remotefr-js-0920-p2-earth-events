@@ -5,21 +5,13 @@ import Map from './components/Map/Map';
 
 function App() {
   const [lastVisit, setLastVisit] = useState('');
-  const [storageCount, setStorageCount] = useState(0);
-  function handleCount() {
-    setTimeout(function () {
-      setStorageCount(storageCount + 1);
-    }, 15000);
-  }
-  handleCount();
   useEffect(() => {
     if (window.localStorage.getItem('lastVisit')) {
       setLastVisit(window.localStorage.getItem('lastVisit').slice(0, 10));
-      console.log(lastVisit);
+    } else {
+      window.localStorage.setItem('lastVisit', new Date().toISOString());
     }
-    window.localStorage.setItem('lastVisit', new Date().toISOString());
-    console.log(window.localStorage.getItem('lastVisit'));
-  }, [storageCount]);
+  }, []);
   return (
     <div>
       <SideNav lastVisit={lastVisit} />
