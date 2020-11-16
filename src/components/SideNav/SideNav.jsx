@@ -7,6 +7,7 @@ import Contact from '../Contact';
 import CurrentEvents from '../CurrentEvents';
 import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
+import LastEvents from '../LastEvents';
 import EventsByCategorie from '../EventsByCategorie';
 
 // ***************************************************
@@ -26,6 +27,10 @@ const menuList = [
   {
     name: 'Closed',
     route: '/closed',
+  },
+  {
+    name: 'Last events',
+    route: '/last',
   },
   {
     name: 'Categories',
@@ -98,6 +103,7 @@ class SideNav extends React.Component {
 
   render = () => {
     const { isClose } = this.state;
+    const { lastVisit } = this.props;
     return (
       <div>
         <div className="sidenav">
@@ -142,6 +148,11 @@ class SideNav extends React.Component {
               <Route exact path="/categories" component={EventsByCategorie} />
               <Route
                 exact
+                path="/last"
+                render={() => <LastEvents lastVisit={lastVisit} />}
+              />
+              <Route
+                exact
                 path="/contact"
                 key="Contact"
                 render={() => <Contact setPanel={this.setPanel} />}
@@ -158,6 +169,7 @@ SideNav.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  lastVisit: PropTypes.string.isRequired,
 };
 
 export default withRouter(SideNav);
