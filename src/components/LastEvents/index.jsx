@@ -6,7 +6,7 @@ import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
 
-class CurrentEvents extends React.Component {
+class LastEvents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,15 +17,18 @@ class CurrentEvents extends React.Component {
   }
 
   componentDidMount() {
-    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
+    const {
+      lastVisit,
+      updateMapEvents,
+      updateMapBoundsFromEvents,
+    } = this.props;
     eonet({
       field: 'events',
       params: {
-        status: 'open',
-        days: 1,
+        start: lastVisit,
+        end: new Date().toISOString().slice(0, 10),
       },
     })
-      .catch((error) => this.setState({ loading: false, error }))
       .then((data) => {
         if (data) {
           this.setState({
@@ -35,22 +38,25 @@ class CurrentEvents extends React.Component {
           updateMapEvents(data.events);
           updateMapBoundsFromEvents(data.events);
         }
-      });
+      })
+      .catch((error) => this.setState({ loading: false, error }));
   }
 
   render() {
     const { currentView, loading, error } = this.state;
+    const { lastVisit } = this.props;
     return (
-      <section id="CurrentEvents">
-        <h2>Current Events</h2>
-        {error ? <p className="error">Erreur: {error.message}</p> : ''}
-        {!error && loading ? <p className="loading">Loading…</p> : ''}
-        {!error && !loading && !currentView.length ? (
-          <p className="empty">No Event</p>
-        ) : (
-          ''
+      <section className="LastEvents">
+        <h2>Events since your last visit</h2>
+        {lastVisit === '' && (
+          <p className="error">This is your first visit, please come again.</p>
         )}
-        {!error && !loading && Boolean(currentView.length) ? (
+        {error && <p className="error">Erreur: {error.message}</p>}
+        {!error && loading && <p className="loading">Loading…</p>}
+        {!error && !loading && !currentView.length && (
+          <p className="empty">No Event</p>
+        )}
+        {!error && !loading && Boolean(currentView.length) && (
           <ol>
             {currentView.map((event) => (
               <li key={event.id}>
@@ -58,17 +64,16 @@ class CurrentEvents extends React.Component {
               </li>
             ))}
           </ol>
-        ) : (
-          ''
         )}
       </section>
     );
   }
 }
 
-CurrentEvents.propTypes = {
+LastEvents.propTypes = {
+  lastVisit: PropTypes.string.isRequired,
   updateMapEvents: PropTypes.func.isRequired,
   updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
-export default connect(null, reduxActions)(CurrentEvents);
+export default connect(null, reduxActions)(LastEvents);

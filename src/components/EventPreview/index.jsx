@@ -1,28 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import normalizeTitle from '../../lib/normalizeTitle';
 import './style.css';
 
-const datation = (date, className) => {
-  const dt = new Date(date);
-  return (
-    <time className={className} dateTime={date}>
-      {dt.toLocaleString('en-US', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      })}
-    </time>
-  );
-};
-
-const EventPreview = class EventPreview extends React.Component {
+class EventPreview extends React.Component {
   constructor(props) {
     super(props);
     this.event = { ...props.event, ...normalizeTitle(props.event.title) };
+    this.focus = this.focus.bind(this);
+  }
+
+  focus() {
+    const { updateMapBoundsFromEvents } = this.props;
+    updateMapBoundsFromEvents([this.event]);
   }
 
   render() {
@@ -34,9 +26,14 @@ const EventPreview = class EventPreview extends React.Component {
       state,
       country,
       sources,
+      closed,
+      id,
     } = this.event;
     return (
-      <article className="EventPreview">
+      <article
+        className={closed ? 'EventPreview closed' : 'EventPreview active'}
+        id={id}
+      >
         <h2>{title}</h2>
         {categories.length ? (
           <ul className="categories">
@@ -57,23 +54,9 @@ const EventPreview = class EventPreview extends React.Component {
           ''
         )}
         {geometry.length ? (
-          <details className="features">
-            <summary>Positions</summary>
-            <ol>
-              {geometry.map((gem) => (
-                <li key={gem.date} data-type={gem.type}>
-                  {datation(gem.date)}
-                  <span className="lat">{gem.coordinates[1]}°</span>
-                  <span className="long">{gem.coordinates[0]}°</span>
-                  <span className="magnitude">
-                    {gem.magnitudeValue
-                      ? gem.magnitudeValue + gem.magnitudeUnit
-                      : ' '}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </details>
+          <button type="button" onClick={this.focus}>
+            See on map
+          </button>
         ) : (
           ''
         )}
@@ -90,7 +73,7 @@ const EventPreview = class EventPreview extends React.Component {
       </article>
     );
   }
-};
+}
 
 EventPreview.propTypes = {
   event: PropTypes.shape({
@@ -101,6 +84,7 @@ EventPreview.propTypes = {
     state: PropTypes.string,
     country: PropTypes.string,
   }).isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
 };
 
-export default EventPreview;
+export default connect(null, reduxActions)(EventPreview);

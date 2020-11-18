@@ -8,6 +8,8 @@ import Calendar from '../Calendar';
 import CurrentEvents from '../CurrentEvents';
 import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
+import LastEvents from '../LastEvents';
+import EventsByCategorie from '../EventsByCategorie';
 
 // ***************************************************
 // FAKE Page and Data
@@ -30,6 +32,14 @@ const menuList = [
   {
     name: 'Calendar',
     route: '/calendar',
+  },
+  {
+    name: 'Last events',
+    route: '/last',
+  },
+  {
+    name: 'Categories',
+    route: '/categories',
   },
   {
     name: 'Contact',
@@ -98,6 +108,7 @@ class SideNav extends React.Component {
 
   render = () => {
     const { isClose } = this.state;
+    const { lastVisit } = this.props;
     return (
       <div>
         <div className="sidenav">
@@ -136,16 +147,20 @@ class SideNav extends React.Component {
           <div className="yellow-panel-container">
             <Switch>
               <Route exact path="/" />
-
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
-
               <Route
                 exact
                 path="/calendar"
                 key="calendar"
                 render={() => <Calendar setPanel={this.setPanel} />}
+              />
+              <Route exact path="/categories" component={EventsByCategorie} />
+              <Route
+                exact
+                path="/last"
+                render={() => <LastEvents lastVisit={lastVisit} />}
               />
               <Route
                 exact
@@ -165,6 +180,7 @@ SideNav.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  lastVisit: PropTypes.string.isRequired,
 };
 
 export default withRouter(SideNav);
