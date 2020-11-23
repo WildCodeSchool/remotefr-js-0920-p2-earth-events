@@ -4,7 +4,6 @@
   padding: 1.75em 1.25em 1.25em;
   background-color: #2b2b2b;
   color: #fff;
-  border-radius: 0.5rem;
   box-shadow: 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.3);
 }
 .EventPreview h2 {
@@ -43,7 +42,6 @@
   justify-content: center;
   list-style: none;
   padding: 0.3em 0.5em;
-  border-radius: 0 0.5rem 0 0.5rem;
   background-color: #000;
   color: hsl(0, 0%, 80%);
   font-size: 0.85em;
