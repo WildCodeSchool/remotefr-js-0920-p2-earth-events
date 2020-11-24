@@ -42,6 +42,23 @@ const satMap = {
 
 const pulsar = L.divIcon({ className: 'pulsar' });
 
+const polyOptions = (closed) => {
+  return {
+    color: closed ? 'slategrey' : 'darkred',
+    weight: closed ? 5 : 7,
+  };
+};
+
+const popup = (date, title) => {
+  return `<p>
+    ${title}
+    <br/>
+    <time datetime=${date}>
+      ${new Date(date).toLocaleString('en-US', dateFormat)}
+    </time>
+  </p>`;
+};
+
 class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -92,51 +109,47 @@ class Map extends React.Component {
       style: 'normal',
     }).addTo(this.map);
     this.layerGroup.clearLayers();
-    currentView.forEach((event) => {
-      const subLayerGroup = new L.LayerGroup();
-      this.layerGroup.addLayer(subLayerGroup);
-      if (event.geometry.length > 1) {
-        const line = L.polyline([], {
-          color: event.closed ? 'slategrey' : 'darkred',
-          weight: event.closed ? 5 : 7,
-        });
-        line.bindPopup(`<p>
-          ${event.title}
-          <br/>
-          <time datetime=${event.geometry[0].date}>
-            ${new Date(event.geometry[0].date).toLocaleString(
-              'en-US',
-              dateFormat,
-            )}
-          </time> - 
-          <time datetime=${event.geometry[event.geometry.length - 1].date}>
-            ${new Date(
-              event.geometry[event.geometry.length - 1].date,
-            ).toLocaleString('en-US', dateFormat)}
-          </time>
-        </p>`);
-        subLayerGroup.addLayer(line);
-        event.geometry.forEach((feature) => {
-          if (feature.coordinates) {
-            const coord = [...feature.coordinates].reverse();
-            line.addLatLng(coord);
+
+    currentView.forEach((ev) => {
+      const event = {
+        ...ev,
+        layerGroup: new L.LayerGroup(),
+      };
+      this.layerGroup.addLayer(event.layerGroup);
+      this.layerGroup.addTo(this.map);
+      const line = L.polyline([], polyOptions(event.closed)).addTo(
+        this.layerGroup,
+      );
+      event.geometry.forEach((geo) => {
+        let neogeo;
+        let neocenter;
+        switch (geo.type.toLowerCase()) {
+          case 'polygon':
+            neogeo = geo.coordinates[0].map((ln) => [...ln].reverse());
+            neocenter = L.polygon(neogeo, polyOptions(event.closed))
+              .addTo(event.layerGroup)
+              .bindPopup(popup(geo.date, event.title))
+              .getCenter();
+            break;
+          case 'point':
+            neogeo = [...geo.coordinates].reverse();
+            L.marker(neogeo, {
+              icon: pulsar,
+            })
+              .bindPopup(popup(geo.date, event.title))
+              .addTo(event.layerGroup);
+            break;
+          default:
+            console.warn(new Error(`geometry.type '${geo.type}' not handled.`));
+        }
+        if (neogeo) {
+          if (neocenter) {
+            line.addLatLng(neocenter);
+          } else if (Array.isArray(neogeo)) {
+            line.addLatLng(neogeo);
           }
-        });
-      } else {
-        L.marker([...event.geometry[0].coordinates].reverse(), {
-          icon: pulsar,
-        })
-          .bindPopup(
-            `<p>
-              ${event.title}
-              <br/>
-              <time datetime=${event.geometry[0].date}>${new Date(
-              event.geometry[0].date,
-            ).toLocaleString('en-US', dateFormat)}</time>
-            </p>`,
-          )
-          .addTo(subLayerGroup);
-      }
+        }
+      });
     });
     this.focus();
   }
@@ -194,9 +207,13 @@ Map.defaultProps = {
   bounds: [],
 };
 
-export default connect((state = {}) => {
+const mapStateToProps = (state) => {
   return {
     currentView: state.mapEvents.currentView,
     bounds: state.mapEvents.bounds,
   };
-}, reduxActions)(Map);
+};
+
+const mapDispatchToProps = reduxActions;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
