@@ -103,11 +103,13 @@ class Contact extends React.Component {
     }
 
     if (!errors.name.length && !errors.email.length && !errors.message.length) {
+      /* eslint-disable */
       if (this.sendMail(name, email, message)) {
         console.log('Mail a bien été envoyer');
       } else {
         console.log('Mail Erreur');
       }
+      /* eslint-enable */
 
       setPanel('close');
       history.push('/');
@@ -161,10 +163,10 @@ class Contact extends React.Component {
 }
 
 Contact.propTypes = {
+  setPanel: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  setPanel: PropTypes.oneOf(['open', 'close']).isRequired,
 };
 
 /**

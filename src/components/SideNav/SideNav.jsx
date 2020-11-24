@@ -10,7 +10,7 @@ import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
 import LastEvents from '../LastEvents';
 import EventsByCategorie from '../EventsByCategorie';
-
+import crossIcon from './images/cross-sign.png';
 // ***************************************************
 // FAKE Page and Data
 // ***************************************************
@@ -141,7 +141,7 @@ class SideNav extends React.Component {
               onClick={() => this.setPanel('close')}
               className="close-button"
             >
-              Close Panel
+              <img src={crossIcon} alt="close panel" className="crossIcon" />
             </NavLink>
           </div>
           <div className="yellow-panel-container">
@@ -150,24 +150,14 @@ class SideNav extends React.Component {
               <Route exact path="/current" component={CurrentEvents} />
               <Route exact path="/history" component={EventsByDate} />
               <Route exact path="/closed" component={ClosedEvents} />
-              <Route
-                exact
-                path="/calendar"
-                key="calendar"
-                render={() => <Calendar setPanel={this.setPanel} />}
-              />
+              <Route exact path="/calendar" component={Calendar} />
               <Route exact path="/categories" component={EventsByCategorie} />
               <Route
                 exact
                 path="/last"
                 render={() => <LastEvents lastVisit={lastVisit} />}
               />
-              <Route
-                exact
-                path="/contact"
-                key="Contact"
-                render={() => <Contact setPanel={this.setPanel} />}
-              />
+              <Route exact path="/contact" component={Contact} />
             </Switch>
           </div>
         </div>
