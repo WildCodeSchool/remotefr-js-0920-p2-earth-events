@@ -18,6 +18,30 @@
   box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
 }
 
+.crossIcon{
+  width:20px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9e7e00 #d6b122;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #d6b122;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #9e7e00;
+  border-radius: 20px;
+  border: 3px solid #d6b122;
+}
+
+
 #yellow-panel.isOpen {
   left: -120px;
 }

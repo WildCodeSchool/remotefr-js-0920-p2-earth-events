@@ -1,13 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCalendar from 'react-calendar';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import reduxActions from '../../redux/actions';
 import './style.css';
 import eonet from '../../lib/eonet';
+import EventPreview from '../EventPreview';
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { date: {}, events: {} };
+    this.state = { date: {}, events: {}, loading: false };
   }
 
   componentDidMount() {
@@ -32,10 +35,14 @@ class Calendar extends React.Component {
    */
 
   getEvents = async (selectDate = null) => {
+    const { updateMapEvents, updateMapBoundsFromEvents } = this.props;
     if (selectDate === null) {
       return {};
     }
-
+    this.setState({
+      loading: true,
+      error: false,
+    });
     const result = await eonet({
       field: 'events',
       params: {
@@ -49,9 +56,11 @@ class Calendar extends React.Component {
           return data.events;
         }
         return {};
-      });
-
-    this.setState({ events: result });
+      })
+      .catch((error) => this.setState({ loading: false, error }));
+    updateMapEvents(result);
+    updateMapBoundsFromEvents(result);
+    this.setState({ events: result, loading: false });
     return {};
   };
 
@@ -61,16 +70,38 @@ class Calendar extends React.Component {
    */
 
   render = () => {
-    const { date, events } = this.state;
-    console.log(date);
-    console.log(events);
+    const { date, events, loading, error } = this.state;
     return (
       <div>
         <h2>Calendar</h2>
-        <ReactCalendar onChange={this.onChange} value={new Date()} />
+        <div id="calendar">
+          <ReactCalendar onChange={this.onChange} value={new Date()} />
+        </div>
+
+        {error && <p className="error">{error.message}</p>}
+        {!error && date && loading && <p className="loading">Loading…</p>}
+        {!error && date && !loading && !events.length && (
+          <p className="empty">No Event</p>
+        )}
+        {!error && date && !loading && Boolean(events.length) && (
+          <div>
+            <h2>Results</h2>
+            {events.map((event) => (
+              <div key={event.id}>
+                <EventPreview event={event} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
 }
 
-export default withRouter(Calendar);
+Calendar.propTypes = {
+  updateMapEvents: PropTypes.func.isRequired,
+  updateMapBoundsFromEvents: PropTypes.func.isRequired,
+};
+/* eslint-disable */
+export default connect(null, reduxActions)(Calendar);
+/* eslint-enable */
