@@ -22,16 +22,12 @@ const menuList = [
     route: '/current',
   },
   {
-    name: 'History',
-    route: '/history',
+    name: 'Calendar',
+    route: '/calendar',
   },
   {
     name: 'Closed',
     route: '/closed',
-  },
-  {
-    name: 'Calendar',
-    route: '/calendar',
   },
   {
     name: 'Last events',
