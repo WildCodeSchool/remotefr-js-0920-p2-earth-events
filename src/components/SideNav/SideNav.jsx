@@ -10,6 +10,7 @@ import ClosedEvents from '../ClosedEvents';
 import EventsByDate from '../EventsByDate';
 import LastEvents from '../LastEvents';
 import EventsByCategorie from '../EventsByCategorie';
+import About from '../About/Index';
 import crossIcon from './images/cross-sign.png';
 // ***************************************************
 // FAKE Page and Data
@@ -44,6 +45,10 @@ const menuList = [
   {
     name: 'Contact',
     route: '/contact',
+  },
+  {
+    name: 'About',
+    route: '/about',
   },
 ];
 
@@ -158,6 +163,7 @@ class SideNav extends React.Component {
                 render={() => <LastEvents lastVisit={lastVisit} />}
               />
               <Route exact path="/contact" component={Contact} />
+              <Route exact path="/about" component={About} />
             </Switch>
           </div>
         </div>
