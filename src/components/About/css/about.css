@@ -1,0 +1,6 @@
+.aboutContainer p {
+  text-align: justify;
+}
+.aboutContainer p a {
+  text-decoration: none;
+}
