@@ -5,6 +5,7 @@ import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
+import Loader from '../Loader';
 
 class LastEvents extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class LastEvents extends React.Component {
           <p className="error">This is your first visit, please come again.</p>
         )}
         {error && <p className="error">Erreur: {error.message}</p>}
-        {!error && loading && <p className="loading">Loading…</p>}
+        {!error && loading && <Loader />}
         {!error && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}

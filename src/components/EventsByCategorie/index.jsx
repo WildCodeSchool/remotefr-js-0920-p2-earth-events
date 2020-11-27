@@ -6,6 +6,7 @@ import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import eventSorter from '../../lib/eventSorter';
 import './style.css';
+import Loader from '../Loader';
 
 class EventsByCategorie extends React.Component {
   constructor() {
@@ -111,9 +112,7 @@ class EventsByCategorie extends React.Component {
           ))}
         </select>
         {error && <p className="error">Erreur: {error.message}</p>}
-        {!error && currentCategorie && loading && (
-          <p className="loading">Loading…</p>
-        )}
+        {!error && currentCategorie && loading && <Loader />}
         {!error && currentCategorie && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}
