@@ -1,0 +1,153 @@
+@import url('https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.mapContainer {
+  margin: 0 0 0 320px;
+  padding: 0;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+#wildmap {
+  margin: 0;
+  padding: 0;
+  width: calc(100vw - 320px);
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  align-content: stretch;
+}
+
+.mapSelector {
+  margin: 2rem;
+  z-index: 5000;
+  color: #0c0c0c;
+  outline: none;
+  font-family: inherit;
+  border: 1px solid #0c0c0c;
+  width: 180px;
+  padding: 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #ffd42d;
+  background-image: linear-gradient(to top, #ffcc00, #ffd42d 33%);
+}
+
+option:hover {
+  background-color: #ffe993;
+}
+
+.pulsar {
+  position: absolute;
+  background: #ffd42d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255, 177, 66, 1);
+  margin: 1rem;
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+  animation: pulsed 2s infinite;
+}
+
+@keyframes pulsed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 177, 66, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+  }
+}
+
+.pulsar:hover {
+  background: #ff2d2d;
+  box-shadow: 0 0 0 0 rgb(255, 66, 66);
+  animation: hoverPulsed 2s infinite;
+}
+
+@keyframes hoverPulsed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 66, 66, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 66, 66, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 66, 66, 0);
+  }
+}
+
+
+
+
+
+
+.leaflet-popup-content-wrapper {
+  padding: 1px;
+  text-align: left;
+  border-radius: 0px;
+  min-height: 150px;
+  min-width: 350px;
+  background-color: #ffd42d;
+
+}
+
+.leaflet-popup-tip {
+  background: #ffd42d;
+}
+
+.leaflet-popup-content p {
+  margin: 0 0;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.leaflet-popup-content a.btn {
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.titlePopup{
+  font-family: 'Poppins',
+  sans-serif;
+  color:#000;
+  font-size:16px;
+  font-weight: bold;
+}
+
+.datePopup {
+  font-family: 'Poppins',
+    sans-serif;
+  color: #000;
+  font-size: 14px;
+}
+
+
+
+.moreInfoPopup,
+.moreInfoPopup a{
+  text-align: right;
+  text-decoration: none;
+  color:#000 !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: #000;
+}

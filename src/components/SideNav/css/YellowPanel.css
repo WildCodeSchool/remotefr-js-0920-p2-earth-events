@@ -1,0 +1,95 @@
+/***********************************************************
+ - yellow-panel
+***********************************************************/
+
+
+#yellow-panel {
+  height: 100%;
+  width: 420px;
+  position: absolute;
+  z-index: 4999;
+  top: 0;
+  left: 320px;
+  background-color: #ffd42d;
+  overflow-x: hidden;
+  transition: left .35s;
+  -webkit-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+  box-shadow: 10px 0px 10px -4px rgba(0, 0, 0, 0.47);
+}
+
+.crossIcon{
+  width:20px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9e7e00 #d6b122;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #d6b122;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #9e7e00;
+  border-radius: 20px;
+  border: 3px solid #d6b122;
+}
+
+
+#yellow-panel.isOpen {
+  left: -120px;
+}
+
+.yellow-panel-container {
+  margin: 70px 30px;
+}
+
+.yellow-panel-title {
+  color: #000;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.yellow-panel-title>span {
+  color: #FFF;
+}
+
+
+.yellow-panel-options{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin:10px 10px;
+}
+
+
+
+.close-button {
+  color:#333333;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.close-button:hover {
+  color:#333333;
+  cursor: pointer;
+}
+
+#yellow-panel h2 {
+  color: black;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+#yellow-panel h2::before {
+  content: "> ";
+  color: #FFF;
+}

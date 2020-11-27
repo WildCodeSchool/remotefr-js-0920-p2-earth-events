@@ -1,0 +1,7 @@
+.ClosedEvents ol {
+  list-style: none;
+  padding: 0;
+}
+.error {
+  color: darkred;
+}
