@@ -118,7 +118,7 @@ class SideNav extends React.Component {
               <img src="images/logo_wild.jpg" className="logo" alt="logo" />
             </NavLink>
           </div>
-          <div className="titleParameters">Parametres</div>
+          {/* <div className="titleParameters">Parametres</div> */}
           <div className="menu-button">
             {menuList.map((item) => (
               <NavLink
