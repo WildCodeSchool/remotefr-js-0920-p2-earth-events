@@ -6,6 +6,7 @@ import reduxActions from '../../redux/actions';
 import './style.css';
 import eonet from '../../lib/eonet';
 import EventPreview from '../EventPreview';
+import Loader from '../Loader';
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -79,7 +80,7 @@ class Calendar extends React.Component {
         </div>
 
         {error && <p className="error">{error.message}</p>}
-        {!error && date && loading && <p className="loading">Loading…</p>}
+        {!error && date && loading && <Loader />}
         {!error && date && !loading && !events.length && (
           <p className="empty">No Event</p>
         )}

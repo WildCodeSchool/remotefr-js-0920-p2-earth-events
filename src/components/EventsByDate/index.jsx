@@ -5,6 +5,7 @@ import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
+import Loader from '../Loader';
 
 class EventsByDate extends React.Component {
   constructor() {
@@ -53,9 +54,7 @@ class EventsByDate extends React.Component {
           <input type="date" onChange={this.changeDate} />
         </p>
         {error && <p className="error">{error.message}</p>}
-        {!error && dateSelected && loading && (
-          <p className="loading">Loading…</p>
-        )}
+        {!error && dateSelected && loading && <Loader />}
         {!error && dateSelected && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}

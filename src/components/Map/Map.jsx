@@ -12,14 +12,15 @@ const dateFormat = {
 };
 
 const lightMap = {
-  tileLayer: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png',
+  tileLayer:
+    'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=87220183-92c9-444b-a0d3-20d0f2648d13',
   maxZoom: 20,
   attribution:
     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 };
 const darkMap = {
   tileLayer:
-    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=87220183-92c9-444b-a0d3-20d0f2648d13',
   maxZoom: 20,
   attribution:
     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -128,7 +129,7 @@ class Map extends React.Component {
             neogeo = geo.coordinates[0].map((ln) => [...ln].reverse());
             neocenter = L.polygon(neogeo, polyOptions(event.closed))
               .addTo(event.layerGroup)
-              .bindPopup(popup(geo.date, event.title))
+              .bindPopup(popup(geo.date, `${event.title}54654`))
               .getCenter();
             break;
           case 'point':
@@ -136,11 +137,13 @@ class Map extends React.Component {
             L.marker(neogeo, {
               icon: pulsar,
             })
-              .bindPopup(popup(geo.date, event.title))
+              .bindPopup(
+                `<div><div class="titlePopup">${event.title}</div><div class="datePopup">${geo.date}</div><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem totam magnam, cumque doloribus impedit soluta quam distinctio veritatis fugit nihil accusamus perspiciatis officia, in obcaecati laboriosam laudantium magni velit consequuntur.</p><div class="moreInfoPopup"><a href="https://www.google.com/search?q=${event.title}" target="blank" >More info</a></div></div>`,
+              )
               .addTo(event.layerGroup);
             break;
           default:
-            console.warn(new Error(`geometry.type '${geo.type}' not handled.`));
+          // new Error(`geometry.type '${geo.type}' not handled.`);
         }
         if (neogeo) {
           if (neocenter) {

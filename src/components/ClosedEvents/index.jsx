@@ -5,6 +5,7 @@ import reduxActions from '../../redux/actions';
 import EventPreview from '../EventPreview';
 import eonet from '../../lib/eonet';
 import './style.css';
+import Loader from '../Loader';
 
 class ClosedEvents extends React.Component {
   constructor() {
@@ -44,7 +45,7 @@ class ClosedEvents extends React.Component {
       <section className="ClosedEvents">
         <h2>Closed Events</h2>
         {error && <p className="error">Erreur: {error.message}</p>}
-        {!error && loading && <p className="loading">Loading…</p>}
+        {!error && loading && <Loader />}
         {!error && !loading && !currentView.length && (
           <p className="empty">No Event</p>
         )}
